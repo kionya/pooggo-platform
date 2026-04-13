@@ -4,6 +4,7 @@ import { DollarSign, Users, RefreshCw, Layers } from 'lucide-react'
 import KpiCard from '@/components/databridge/KpiCard'
 import SyncButton from '@/components/databridge/SyncButton'
 import ProceduresClient from '@/components/databridge/ProceduresClient'
+import RichdocHeader from '@/components/databridge/RichdocHeader'
 import { getProcedureData } from '@/lib/analytics'
 
 function formatRevenue(won: number) {
@@ -12,24 +13,17 @@ function formatRevenue(won: number) {
   return `${won.toLocaleString()}원`
 }
 
-export default async function ProceduresPage() {
-  const data = await getProcedureData()
+interface PageProps {
+  searchParams: Promise<{ hospitalId?: string }>
+}
+
+export default async function ProceduresPage({ searchParams }: PageProps) {
+  const params = await searchParams
+  const data = await getProcedureData(params.hospitalId)
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-xs font-bold">DB</span>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900">ABC 피부과</p>
-            <p className="text-xs text-blue-500">Powered by Databridge</p>
-          </div>
-        </div>
-        <SyncButton />
-      </header>
+      <RichdocHeader selectedHospitalId={params.hospitalId} rightSlot={<SyncButton />} />
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
         {/* 페이지 타이틀 + 데이터 소스 배지 */}

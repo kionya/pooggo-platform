@@ -43,7 +43,7 @@ export default function DatabridgeSidebar() {
         <div className="px-5 py-6 border-b border-white/10">
           <div className="flex items-center gap-2 mb-1">
             <Activity size={18} className="text-blue-400" />
-            <span className="text-white font-bold text-sm">Databridge</span>
+            <span className="text-white font-bold text-sm">Richdoc</span>
           </div>
           <p className="text-[#94a3b8] text-xs">Hospital Data Analytics</p>
         </div>
@@ -72,8 +72,8 @@ export default function DatabridgeSidebar() {
 
         {/* 하단 */}
         <div className="px-5 py-4 border-t border-white/10">
-          <p className="text-[#94a3b8] text-xs">ABC 피부과</p>
-          <p className="text-white text-xs font-medium">김원장님</p>
+          <p className="text-[#94a3b8] text-xs">Richdoc Analytics</p>
+          <p className="text-white text-xs font-medium">원장님 대시보드</p>
         </div>
       </aside>
     </>

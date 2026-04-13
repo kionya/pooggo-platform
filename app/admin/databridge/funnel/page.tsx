@@ -1,6 +1,7 @@
 import { DollarSign, ShoppingCart, TrendingUp, Target, CheckCircle, PlusCircle } from 'lucide-react'
 import KpiCard from '@/components/databridge/KpiCard'
 import FunnelBarChart from '@/components/databridge/FunnelBarChart'
+import RichdocHeader from '@/components/databridge/RichdocHeader'
 import { getFunnelData } from '@/lib/analytics'
 
 const PLATFORM_ICONS: Record<string, { bg: string; text: string }> = {
@@ -22,23 +23,17 @@ function roiColor(roi: number) {
   return 'text-orange-500'
 }
 
-export default async function FunnelPage() {
+interface PageProps {
+  searchParams: Promise<{ hospitalId?: string }>
+}
+
+export default async function FunnelPage({ searchParams }: PageProps) {
+  const params = await searchParams
   const data = await getFunnelData()
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-xs font-bold">DB</span>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900">ABC 피부과</p>
-            <p className="text-xs text-blue-500">Powered by Databridge</p>
-          </div>
-        </div>
-      </header>
+      <RichdocHeader selectedHospitalId={params.hospitalId} />
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
         <div className="mb-6">

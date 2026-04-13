@@ -1,12 +1,13 @@
-import { Search, FileText, Megaphone, Eye, Bell, HelpCircle } from 'lucide-react'
+import { Search, FileText, Megaphone, Eye } from 'lucide-react'
 import KpiCard from '@/components/databridge/KpiCard'
 import PlatformBadge from '@/components/databridge/PlatformBadge'
+import RichdocHeader from '@/components/databridge/RichdocHeader'
 import { getCompetitorData } from '@/lib/analytics'
 
 const POPULAR_KEYWORDS = ['바디필러', '엉덩이필러', '코성형', '지방흡입', '보톡스']
 
 interface PageProps {
-  searchParams: Promise<{ keyword?: string }>
+  searchParams: Promise<{ keyword?: string; hospitalId?: string }>
 }
 
 export default async function CompetitorPage({ searchParams }: PageProps) {
@@ -16,35 +17,7 @@ export default async function CompetitorPage({ searchParams }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 상단 헤더 */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-xs font-bold">DB</span>
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-gray-900">ABC 피부과</p>
-            <p className="text-xs text-blue-500">Powered by Databridge</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="p-2 text-gray-400 hover:text-gray-600">
-            <Bell size={18} />
-          </button>
-          <button className="p-2 text-gray-400 hover:text-gray-600">
-            <HelpCircle size={18} />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              김
-            </div>
-            <div className="hidden sm:block text-right">
-              <p className="text-xs font-semibold text-gray-800">김원장님</p>
-              <p className="text-xs text-blue-500">프리미엄 플랜</p>
-            </div>
-          </div>
-        </div>
-      </header>
+      <RichdocHeader selectedHospitalId={params.hospitalId} />
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
         <div className="mb-6">
@@ -65,6 +38,9 @@ export default async function CompetitorPage({ searchParams }: PageProps) {
               placeholder="시술명을 입력하세요 (예: 보톡스, 필러, 울쎄라)"
               className="flex-1 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
+            {params.hospitalId && (
+              <input type="hidden" name="hospitalId" value={params.hospitalId} />
+            )}
             <button
               type="submit"
               className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
@@ -77,7 +53,7 @@ export default async function CompetitorPage({ searchParams }: PageProps) {
             {POPULAR_KEYWORDS.map((kw) => (
               <a
                 key={kw}
-                href={`/admin/databridge/competitor?keyword=${encodeURIComponent(kw)}`}
+                href={`/admin/databridge/competitor?keyword=${encodeURIComponent(kw)}${params.hospitalId ? `&hospitalId=${params.hospitalId}` : ''}`}
                 className={`text-xs px-3 py-1 rounded-full border transition-colors ${
                   kw === keyword
                     ? 'bg-blue-50 border-blue-200 text-blue-600 font-medium'
@@ -142,7 +118,7 @@ export default async function CompetitorPage({ searchParams }: PageProps) {
             {data.relatedKeywords.map((rk) => (
               <a
                 key={rk.keyword}
-                href={`/admin/databridge/competitor?keyword=${encodeURIComponent(rk.keyword)}`}
+                href={`/admin/databridge/competitor?keyword=${encodeURIComponent(rk.keyword)}${params.hospitalId ? `&hospitalId=${params.hospitalId}` : ''}`}
                 className="flex flex-col gap-1.5 p-3 border border-gray-100 rounded-lg hover:border-blue-200 hover:bg-blue-50/30 transition-colors"
               >
                 <div className="flex items-center justify-between">
