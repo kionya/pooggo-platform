@@ -38,14 +38,18 @@ model Hospital {
   desc      String
   createdAt DateTime @default(now())
 
-  // 👇 추가된 관계들
+  // 추가된 관계들
   doctors   Doctor[]
   menus     Menu[]
   userReviews Review[]
-  
+
   // 기존 관계 유지
   treatments Treatment[]
   leads      Lead[]
+
+  // Databridge 분석 관계
+  adChannels  AdChannel[]
+  procedures  ProcedurePerformance[]
 }
 
 // 👨‍⚕️ 의사 선생님 정보
@@ -130,7 +134,6 @@ model Settlement {
   
   createdAt     DateTime  @default(now())
 }
-// 👇 맨 아래에 추가하세요!
 model Consultation {
   id        String   @id @default(uuid())
   customerName String?
@@ -139,4 +142,92 @@ model Consultation {
   imageUrl  String?
   password  String?
   createdAt DateTime @default(now())
+}
+
+// ── DATABRIDGE: 경쟁사 분석 ──────────────────────────────────────────────────
+
+model CompetitorKeyword {
+  id                String   @id @default(uuid())
+  keyword           String   @unique
+  monthlySearchVol  Int
+  relatedContentCnt Int
+  competitorAdCnt   Int
+  avgViewCount      Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  relatedKeywords    RelatedKeyword[]
+  competitorContents CompetitorContent[]
+}
+
+model RelatedKeyword {
+  id               String            @id @default(uuid())
+  keyword          String
+  relevanceScore   Float
+  monthlySearchVol Int
+  parentKeywordId  String
+  parentKeyword    CompetitorKeyword @relation(fields: [parentKeywordId], references: [id])
+}
+
+model CompetitorContent {
+  id           String            @id @default(uuid())
+  title        String
+  hospitalName String
+  platform     String
+  viewCount    Int
+  url          String?
+  thumbnailUrl String?
+  publishedAt  DateTime?
+  keywordId    String
+  keyword      CompetitorKeyword @relation(fields: [keywordId], references: [id])
+  createdAt    DateTime          @default(now())
+}
+
+// ── DATABRIDGE: 마케팅 퍼널 ──────────────────────────────────────────────────
+
+model AdChannel {
+  id             String          @id @default(uuid())
+  name           String
+  platform       String
+  isConnected    Boolean         @default(false)
+  accessToken    String?
+  refreshToken   String?
+  tokenExpiresAt DateTime?
+  hospitalId     String
+  hospital       Hospital        @relation(fields: [hospitalId], references: [id])
+  createdAt      DateTime        @default(now())
+  performances   AdPerformance[]
+}
+
+model AdPerformance {
+  id             String    @id @default(uuid())
+  channelId      String
+  channel        AdChannel @relation(fields: [channelId], references: [id])
+  periodStart    DateTime
+  periodEnd      DateTime
+  adSpend        Int
+  conversions    Int
+  cac            Int
+  conversionRate Float
+  roi            Float
+  impressions    Int?
+  clicks         Int?
+  createdAt      DateTime  @default(now())
+}
+
+// ── DATABRIDGE: 시술별 성과 ──────────────────────────────────────────────────
+
+model ProcedurePerformance {
+  id               String   @id @default(uuid())
+  procedureName    String
+  category         String
+  revenue          Int
+  patientCount     Int
+  repeatRate       Float
+  trendPct         Float
+  aiRecommendation String?
+  periodMonth      Int
+  hospitalId       String
+  hospital         Hospital @relation(fields: [hospitalId], references: [id])
+  createdAt        DateTime @default(now())
 }
