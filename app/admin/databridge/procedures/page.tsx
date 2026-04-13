@@ -1,7 +1,8 @@
-import { DollarSign, Users, RefreshCw, Layers, Upload } from 'lucide-react'
+import { DollarSign, Users, RefreshCw, Layers } from 'lucide-react'
 import KpiCard from '@/components/databridge/KpiCard'
 import TrendBadge from '@/components/databridge/TrendBadge'
 import ProcedureCategoryChart from '@/components/databridge/ProcedureCategoryChart'
+import SyncButton from '@/components/databridge/SyncButton'
 import { getProcedureData } from '@/lib/analytics'
 
 function formatRevenue(won: number) {
@@ -32,10 +33,7 @@ export default async function ProceduresPage() {
             <p className="text-xs text-blue-500">Powered by Databridge</p>
           </div>
         </div>
-        <button className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition-colors">
-          <Upload size={13} />
-          시술 데이터 업로드
-        </button>
+        <SyncButton />
       </header>
 
       <div className="px-6 py-6 max-w-7xl mx-auto">
@@ -166,11 +164,11 @@ export default async function ProceduresPage() {
           })}
         </div>
 
-        {data.dataSource === 'mock' && (
-          <p className="text-xs text-gray-300 text-center mt-6">
-            * 목 데이터 — 실제 시술 데이터 업로드 후 자동 반영됩니다
-          </p>
-        )}
+        <p className={`text-xs text-center mt-6 ${data.dataSource === 'live' ? 'text-emerald-500' : 'text-gray-300'}`}>
+          {data.dataSource === 'live'
+            ? '✓ 실DB 데이터 — 병원 메뉴 기반 집계'
+            : '* 목 데이터 — 상단 동기화 버튼 클릭 후 실데이터로 전환됩니다'}
+        </p>
       </div>
     </div>
   )

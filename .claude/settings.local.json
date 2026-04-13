@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(gh pr create --title 'Databridge 경쟁사 분석 대시보드 — Prisma 스키마' --body ':*)",
+      "Bash(npx prisma:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(npx ts-node --transpile-only -e ':*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(node -e ':*)"
+    ]
+  }
+}
