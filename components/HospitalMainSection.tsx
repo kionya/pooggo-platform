@@ -138,6 +138,9 @@ export default function HospitalMainSection() {
                <button onClick={() => router.push(`/compare?ids=${compareList.join(",")}`)} className="bg-blue-900 text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-gray-800 flex items-center shadow-lg transition transform hover:-translate-y-1">
                  비교견적 받기 <ArrowRight className="w-5 h-5 ml-2" />
                </button>
+               <button onClick={() => router.push(`/booking?hospitals=${compareList.join(",")}`)} className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-700">
+                 예약요청
+               </button>
             </div>
           </div>
         </div>

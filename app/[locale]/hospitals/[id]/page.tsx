@@ -166,8 +166,8 @@ export default async function HospitalDetailPage(props: Props) {
       </div>
 
       <div className="fixed bottom-0 w-full bg-white border-t p-4 z-20 safe-area-bottom">
-        <Link href="/" className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl text-lg shadow-xl text-center">
-          이 병원 상담 신청하기
+        <Link href={`/booking?hospital=${hospital.id}`} className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl text-lg shadow-xl text-center">
+          이 병원 예약하기
         </Link>
       </div>
     </div>

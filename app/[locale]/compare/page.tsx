@@ -78,7 +78,7 @@ export default async function ComparePage({
                     <MapPin className="w-3 h-3 mx-1" />
                     {h.city}
                   </div>
-                  <Link href="/consult" className="inline-block mt-2 text-xs bg-blue-600 text-white px-3 py-1 rounded-lg font-bold hover:bg-blue-700">{t("consultCta")}</Link>
+                  <Link href={`/booking?hospital=${h.id}`} className="inline-block mt-2 text-xs bg-blue-600 text-white px-3 py-1 rounded-lg font-bold hover:bg-blue-700">{t("consultCta")}</Link>
                 </th>
               ))}
             </tr>
