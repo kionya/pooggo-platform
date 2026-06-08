@@ -19,4 +19,9 @@ describe("scanForbidden", () => {
     expect(scanForbidden("Find Best Clinic")).toContain("best");
     expect(scanForbidden("bestseller list")).not.toContain("best");
   });
+  it("최고/1위 감지", () => {
+    expect(scanForbidden("국내 최고의 병원")).toContain("최고/1위");
+    expect(scanForbidden("국내 1위 클리닉")).toContain("최고/1위");
+  });
+  it("no side effect 감지", () => expect(scanForbidden("No side effects at all")).toContain("no side effect"));
 });
