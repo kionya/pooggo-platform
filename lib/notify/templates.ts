@@ -5,6 +5,10 @@ export type BookingLike = {
   messengerChannel?: string; messengerHandle?: string; email?: string;
 };
 
+function esc(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 function lines(b: BookingLike, hospitalName: string): string[] {
   return [
     `Tracking code: ${b.code}`,
@@ -18,7 +22,7 @@ function lines(b: BookingLike, hospitalName: string): string[] {
 }
 
 export function patientEmail(b: BookingLike, hospitalName: string): { subject: string; html: string } {
-  const body = lines(b, hospitalName).map((l) => `<p>${l}</p>`).join("");
+  const body = lines(b, hospitalName).map((l) => `<p>${esc(l)}</p>`).join("");
   return {
     subject: `[RICH DOC] Booking received — ${b.code}`,
     html: `<h2>Your booking request was received</h2><p>This is a request; the clinic will confirm the schedule.</p>${body}`,
@@ -30,7 +34,7 @@ export function adminMessage(b: BookingLike, hospitalName: string): string {
 }
 
 export function hospitalEmail(b: BookingLike, hospitalName: string): { subject: string; html: string } {
-  const body = lines(b, hospitalName).map((l) => `<p>${l}</p>`).join("");
+  const body = lines(b, hospitalName).map((l) => `<p>${esc(l)}</p>`).join("");
   return {
     subject: `[RICH DOC] New patient booking — ${hospitalName}`,
     html: `<h2>New booking request</h2>${body}`,

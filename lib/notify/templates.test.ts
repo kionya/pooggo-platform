@@ -19,6 +19,12 @@ describe("patientEmail", () => {
     expect(r.html).toContain("Rejuel Clinic");
     expect(r.html).toContain("2026-07-01");
   });
+  it("HTML 특수문자 이스케이프(주입 방지)", () => {
+    const evil = { ...booking, name: "<script>alert(1)</script>" } as any;
+    const out = patientEmail(evil, hospitalName);
+    expect(out.html).not.toContain("<script>");
+    expect(out.html).toContain("&lt;script&gt;");
+  });
 });
 
 describe("adminMessage", () => {
