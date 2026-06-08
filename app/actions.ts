@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { resolveText } from "@/lib/i18n/text";
+import { compareHospitalsByTier } from "@/lib/hospital/tier";
 
 // 1. 상담 신청 저장하기
 export async function createConsultation(formData: FormData) {
@@ -34,18 +35,22 @@ export async function getHospitals() {
   try {
     const hospitals = await db.hospital.findMany({
       where: { isPublished: true },
-      orderBy: { rating: "desc" },
     });
-    return hospitals.map((h) => ({
-      id: h.id,
-      name: resolveText(h.name, "ko"),
-      location: `${h.city}, ${h.district}`,
-      tags: h.tags || "",
-      rating: h.rating,
-      reviews: h.reviews,
-      image: h.image || "",
-      desc: resolveText(h.intro, "ko"),
-    }));
+    return hospitals
+      .map((h) => ({
+        id: h.id,
+        name: resolveText(h.name, "ko"),
+        location: `${h.city}, ${h.district}`,
+        tags: h.tags || "",
+        rating: h.rating,
+        reviews: h.reviews,
+        image: h.image || "",
+        desc: resolveText(h.intro, "ko"),
+        tier: h.tier,
+        nameI18n: h.name,
+        introI18n: h.intro,
+      }))
+      .sort(compareHospitalsByTier);
   } catch (error) {
     console.error("병원 목록 로딩 실패:", error);
     return [];

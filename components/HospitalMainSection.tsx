@@ -3,13 +3,17 @@
 import { useState, useEffect } from "react";
 import { Star, MapPin, Check, Plus, ArrowRight, X, ShieldCheck } from "lucide-react";
 import { getHospitals, createConsultation } from "@/app/actions";
-import Link from "next/link"; 
+import Link from "next/link";
+import TierBadge from "@/components/hospitals/TierBadge";
+import { useLocale } from "next-intl";
+import { resolveText } from "@/lib/i18n/text";
 
 export default function HospitalMainSection() {
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [compareList, setCompareList] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const locale = useLocale();
 
   useEffect(() => {
     async function fetchData() {
@@ -68,6 +72,7 @@ export default function HospitalMainSection() {
                   {/* 이미지 영역 */}
                   <Link href={`/hospitals/${hospital.id}`} className="block relative h-48 bg-gray-200 cursor-pointer group">
                     <img src={hospital.image || ""} alt={hospital.name} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                    <div className="absolute top-4 left-4"><TierBadge tier={hospital.tier} /></div>
                     <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-2 py-1 rounded-lg flex items-center shadow-sm">
                       <Star className="w-4 h-4 text-yellow-500 fill-current mr-1" />
                       <span className="text-sm font-bold">{hospital.rating}</span>
@@ -76,12 +81,12 @@ export default function HospitalMainSection() {
                   
                   <div className="p-6">
                     <Link href={`/hospitals/${hospital.id}`}>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1 hover:text-blue-600 transition">{hospital.name}</h3>
+                      <h3 className="text-xl font-bold text-gray-900 mb-1 hover:text-blue-600 transition">{resolveText(hospital.nameI18n, locale)}</h3>
                     </Link>
                     <div className="flex items-center text-sm text-gray-500 mb-3">
                       <MapPin className="w-4 h-4 mr-1" /> {hospital.location}
                     </div>
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-4 h-10">{hospital.desc}</p>
+                    <p className="text-gray-600 text-sm line-clamp-2 mb-4 h-10">{resolveText(hospital.introI18n, locale)}</p>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
                       {/* 👇 안전장치 3: 태그 렌더링 시 에러 방지 */}
