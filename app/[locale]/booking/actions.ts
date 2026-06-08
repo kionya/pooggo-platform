@@ -20,7 +20,7 @@ export async function createBooking(formData: FormData): Promise<{ ok: boolean; 
     phone: String(formData.get("phone") || ""),
     nationality: String(formData.get("nationality") || ""),
     email: String(formData.get("email") || ""),
-    age: ageRaw ? Number(ageRaw) : null,
+    age: ageRaw && !Number.isNaN(Number(ageRaw)) ? Number(ageRaw) : null,
     gender: String(formData.get("gender") || ""),
     messengerChannel: String(formData.get("messengerChannel") || ""),
     messengerHandle: String(formData.get("messengerHandle") || ""),
@@ -31,6 +31,8 @@ export async function createBooking(formData: FormData): Promise<{ ok: boolean; 
     timeOfDay: String(formData.get("timeOfDay") || ""),
     consent: formData.get("consent") === "on" || formData.get("consent") === "true",
   };
+
+  input.locale = ["ko", "en", "zh", "ja"].includes(input.locale) ? input.locale : "ko";
 
   const errors = validateBookingInput(input);
   if (errors.length) return { ok: false, errors };
