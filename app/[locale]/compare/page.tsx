@@ -56,12 +56,13 @@ export default async function ComparePage({
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse">
+        <table className="w-full min-w-[640px] border-collapse">
+          <caption className="sr-only">{t("title")}</caption>
           <thead>
             <tr>
-              <th className="text-left p-3 border-b w-40">{t("treatment")}</th>
+              <th scope="col" className="text-left p-3 border-b w-40">{t("treatment")}</th>
               {ordered.map((h) => (
-                <th key={h.id} className="p-3 border-b text-left align-top">
+                <th key={h.id} scope="col" className="p-3 border-b text-left align-top">
                   <div className="flex items-center gap-2 mb-1">
                     <TierBadge tier={h.tier} />
                   </div>
@@ -77,6 +78,7 @@ export default async function ComparePage({
                     <MapPin className="w-3 h-3 mx-1" />
                     {h.city}
                   </div>
+                  <Link href="/consult" className="inline-block mt-2 text-xs bg-blue-600 text-white px-3 py-1 rounded-lg font-bold hover:bg-blue-700">{t("consultCta")}</Link>
                 </th>
               ))}
             </tr>
@@ -95,7 +97,7 @@ export default async function ComparePage({
 
               return (
                 <tr key={cat} className="border-b">
-                  <td className="p-3 font-medium text-gray-700">{cat}</td>
+                  <th scope="row" className="p-3 font-medium text-gray-700 text-left">{cat}</th>
                   {cells.map((m, i) => {
                     const isLowest =
                       m != null &&

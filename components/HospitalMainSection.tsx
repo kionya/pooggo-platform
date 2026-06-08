@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Star, MapPin, Check, Plus, ArrowRight, X, ShieldCheck } from "lucide-react";
-import { getHospitals, createConsultation } from "@/app/actions";
+import { Star, MapPin, Check, Plus, ArrowRight } from "lucide-react";
+import { getHospitals } from "@/app/actions";
 import TierBadge from "@/components/hospitals/TierBadge";
 import { useLocale } from "next-intl";
 import { resolveText } from "@/lib/i18n/text";
@@ -12,7 +12,6 @@ export default function HospitalMainSection() {
   const [hospitals, setHospitals] = useState<any[]>([]);
   const [compareList, setCompareList] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const locale = useLocale();
   const router = useRouter();
 
@@ -44,11 +43,6 @@ export default function HospitalMainSection() {
       setCompareList([...compareList, id]);
     }
   };
-
-  const selectedHospitalNames = hospitals
-    .filter(h => compareList.includes(h.id))
-    .map(h => h.name)
-    .join(", ");
 
   return (
     <section id="hospitals" className="py-20 px-4 bg-gray-50">
@@ -149,33 +143,6 @@ export default function HospitalMainSection() {
         </div>
       )}
 
-      {/* 모달 UI (기존과 동일) */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl w-full max-w-md p-8 shadow-2xl relative">
-            <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"><X className="w-6 h-6" /></button>
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShieldCheck className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900">견적 요청서</h3>
-              <p className="text-gray-500 mt-2">선택하신 <span className="text-blue-600 font-bold">{compareList.length}개 병원</span>의<br/>최저가 견적을 확인해드립니다.</p>
-            </div>
-            <form action={createConsultation} className="space-y-4">
-              <input type="hidden" name="content" value={`[메인페이지 장바구니] 선택병원: ${selectedHospitalNames}`} />
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">이름</label>
-                <input name="customerName" type="text" placeholder="예: 홍길동" className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">연락처</label>
-                <input name="phone" type="tel" placeholder="010-1234-5678" required className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" />
-              </div>
-              <button type="submit" className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 mt-4 text-lg shadow-lg shadow-blue-200">무료 견적서 받기</button>
-            </form>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
