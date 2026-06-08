@@ -4,5 +4,6 @@
   "Tier": { "BENEFIT": "베네핏", "PARTNER": "제휴", "RECOMMENDED": "추천", "benefitsTitle": "추가 혜택", "disclaimer": "등급은 플랫폼 제휴 관계를 나타냅니다." },
   "Compare": { "title": "병원 비교", "empty": "비교할 병원을 먼저 담아주세요.", "treatment": "시술", "lowest": "최저가", "consultCta": "상담 신청", "back": "목록으로" },
   "Detail": { "messengers": "메신저로 문의", "hours": "운영시간", "closed": "휴무", "copy": "복사", "copied": "복사됨", "note": "비고" },
-  "Hospitals": { "title": "제휴 병원", "subtitle": "원하는 병원을 비교 견적 받아보세요.", "noResults": "조건에 맞는 병원이 없습니다.", "viewDetail": "상세보기", "addCompare": "담기", "added": "담김" }
+  "Hospitals": { "title": "제휴 병원", "subtitle": "원하는 병원을 비교 견적 받아보세요.", "noResults": "조건에 맞는 병원이 없습니다.", "viewDetail": "상세보기", "addCompare": "담기", "added": "담김" },
+  "Booking": { "title": "예약 요청", "forHospitals": "예약 병원", "name": "이름", "phone": "연락처", "nationality": "국적", "email": "이메일", "age": "나이", "gender": "성별", "messenger": "메신저", "handle": "계정/번호", "interest": "관심 시술", "memo": "메모", "photo": "사진 첨부", "date1": "1지망 날짜", "date2": "2지망 날짜", "timeOfDay": "희망 시간대", "morning": "오전", "afternoon": "오후", "evening": "저녁", "consent": "개인정보 수집·이용에 동의합니다", "notConfirmed": "예약은 요청이며 병원 확인 후 확정됩니다.", "submit": "예약 요청 보내기", "submitting": "전송 중...", "successTitle": "예약 요청이 접수되었습니다", "yourCode": "추적 코드", "emailedNote": "입력하신 이메일로 확인을 보냈습니다.", "backHome": "홈으로" }
 }
