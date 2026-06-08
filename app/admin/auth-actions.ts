@@ -2,11 +2,12 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { createToken, verifyToken, ADMIN_COOKIE } from "@/lib/auth";
+import { createToken, verifyToken, ADMIN_COOKIE, safeEqualStr, TOKEN_TTL_MS } from "@/lib/auth";
 
 export async function login(formData: FormData) {
-  const pass = formData.get("password") as string;
-  if (!process.env.ADMIN_PASSWORD || pass !== process.env.ADMIN_PASSWORD) {
+  const pass = formData.get("password");
+  const expected = process.env.ADMIN_PASSWORD;
+  if (!expected || typeof pass !== "string" || !safeEqualStr(pass, expected)) {
     redirect("/admin/login?error=1");
   }
   const c = await cookies();
@@ -15,7 +16,7 @@ export async function login(formData: FormData) {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 8,
+    maxAge: TOKEN_TTL_MS / 1000,
   });
   redirect("/admin");
 }
