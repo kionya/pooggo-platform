@@ -2,7 +2,10 @@ import { getHospitalById, addReview } from "@/app/actions";
 import { Star, User, DollarSign, MapPin, ArrowLeft, MessageSquare } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { resolveText } from "@/lib/i18n/text";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import MessengerButtons from "@/components/hospitals/MessengerButtons";
+import OperatingHoursTable from "@/components/hospitals/OperatingHoursTable";
+import TierBadge from "@/components/hospitals/TierBadge";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
@@ -13,7 +16,8 @@ export default async function HospitalDetailPage(props: Props) {
   // ⭐⭐ 여기가 핵심입니다! await으로 기다렸다가 ID를 꺼내야 합니다.
   const { id: hospitalId, locale } = await props.params;
   setRequestLocale(locale);
-  
+  const tTier = await getTranslations("Tier");
+
   // 데이터 가져오기
   const hospital = await getHospitalById(hospitalId);
 
@@ -59,6 +63,7 @@ export default async function HospitalDetailPage(props: Props) {
         <img src={hospital.image || ""} alt={resolveText(hospital.name, locale)} className="w-full h-full object-cover" />
         <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-6 pt-20">
           <h2 className="text-white text-2xl font-bold">{resolveText(hospital.name, locale)}</h2>
+          <div className="mt-2"><TierBadge tier={hospital.tier} /></div>
           <div className="flex items-center text-white/90 text-sm mt-1">
             <MapPin className="w-4 h-4 mr-1" /> {resolveText(hospital.address, locale)}
           </div>
@@ -113,6 +118,15 @@ export default async function HospitalDetailPage(props: Props) {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        <OperatingHoursTable hours={hospital.operatingHours} />
+        <MessengerButtons messengers={hospital.messengers as Record<string, string>} />
+        {hospital.tier === "BENEFIT" && resolveText(hospital.benefits, locale) && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-4">
+            <h3 className="font-bold text-lg mb-2 text-amber-800">★ {tTier("benefitsTitle")}</h3>
+            <p className="text-gray-700 text-sm whitespace-pre-line">{resolveText(hospital.benefits, locale)}</p>
           </div>
         )}
 
