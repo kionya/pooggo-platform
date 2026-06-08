@@ -1,7 +1,8 @@
 import { db } from "@/lib/db";
 import Link from "next/link";
 import { resolveText } from "@/lib/i18n/text";
-import { deleteHospital, togglePublish } from "@/app/admin/hospital-actions";
+import { togglePublish } from "@/app/admin/hospital-actions";
+import DeleteHospitalButton from "@/components/admin/DeleteHospitalButton";
 
 export default async function HospitalsAdminList() {
   const hospitals = await db.hospital.findMany({ orderBy: { createdAt: "desc" } });
@@ -26,9 +27,7 @@ export default async function HospitalsAdminList() {
                 </button>
               </form>
               <Link href={`/admin/hospitals/${h.id}/edit`} className="text-sm bg-gray-900 text-white px-3 py-1 rounded">수정</Link>
-              <form action={deleteHospital.bind(null, h.id)}>
-                <button className="text-sm text-red-500 px-2">삭제</button>
-              </form>
+              <DeleteHospitalButton id={h.id} name={resolveText(h.name, "ko")} />
             </div>
           </div>
         ))}

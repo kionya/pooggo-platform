@@ -85,6 +85,7 @@ export async function deleteHospital(id: string): Promise<{ ok: boolean; error?:
       await tx.doctor.deleteMany({ where: { hospitalId: id } });
       await tx.review.deleteMany({ where: { hospitalId: id } });
       await tx.treatment.deleteMany({ where: { hospitalId: id } });
+      await tx.lead.updateMany({ where: { hospitalId: id }, data: { hospitalId: null } });
       await tx.hospital.delete({ where: { id } });
     });
     revalidatePath("/admin/hospitals");
