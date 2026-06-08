@@ -51,10 +51,10 @@ export default function HospitalForm({
     else setErrors(res.errors);
   }
 
-  const addDoctor = () => set("doctors", [...form.doctors, { name: { ...EMPTY_I18N }, specialty: { ...EMPTY_I18N }, image: "", order: form.doctors.length }]);
-  const addMenu = () => set("menus", [...form.menus, { name: { ...EMPTY_I18N }, category: "ETC", price: null, priceText: { ...EMPTY_I18N }, currency: "KRW", order: form.menus.length }]);
-  const setDoctor = (i: number, d: DoctorInput) => set("doctors", form.doctors.map((x, idx) => (idx === i ? d : x)));
-  const setMenu = (i: number, m: MenuInput) => set("menus", form.menus.map((x, idx) => (idx === i ? m : x)));
+  const addDoctor = () => setForm((f) => ({ ...f, doctors: [...f.doctors, { name: { ...EMPTY_I18N }, specialty: { ...EMPTY_I18N }, image: "", order: f.doctors.length }] }));
+  const addMenu = () => setForm((f) => ({ ...f, menus: [...f.menus, { name: { ...EMPTY_I18N }, category: "ETC", price: null, priceText: { ...EMPTY_I18N }, currency: "KRW", order: f.menus.length }] }));
+  const setDoctor = (i: number, d: DoctorInput) => setForm((f) => ({ ...f, doctors: f.doctors.map((x, idx) => (idx === i ? d : x)) }));
+  const setMenu = (i: number, m: MenuInput) => setForm((f) => ({ ...f, menus: f.menus.map((x, idx) => (idx === i ? m : x)) }));
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
@@ -66,8 +66,8 @@ export default function HospitalForm({
 
       <section className="bg-white p-5 rounded-xl border">
         <h3 className="font-bold mb-3">기본 정보</h3>
-        <label className="text-sm font-bold text-gray-700">slug (URL용, 영문)</label>
-        <input value={form.slug} onChange={(e) => set("slug", e.target.value)} placeholder="rejuel-gangnam" className="w-full border p-3 rounded-lg mb-3" />
+        <label htmlFor="hf-slug" className="text-sm font-bold text-gray-700">slug (URL용, 영문)</label>
+        <input id="hf-slug" value={form.slug} onChange={(e) => set("slug", e.target.value)} placeholder="rejuel-gangnam" className="w-full border p-3 rounded-lg mb-3" />
         <I18nField label="병원명" value={form.name} onChange={(v) => set("name", v)} />
         <I18nField label="한 줄 소개" value={form.intro} onChange={(v) => set("intro", v)} />
         <I18nField label="상세 소개" value={form.about} onChange={(v) => set("about", v)} multiline />
@@ -86,8 +86,8 @@ export default function HospitalForm({
           </div>
           <div><label className="text-sm font-bold text-gray-700">태그(콤마)</label><input value={form.tags} onChange={(e) => set("tags", e.target.value)} placeholder="리프팅,보톡스" className="w-full border p-3 rounded-lg" /></div>
         </div>
-        <label className="text-sm font-bold text-gray-700 mt-3 block">대표 이미지 URL</label>
-        <input value={form.image} onChange={(e) => set("image", e.target.value)} placeholder="https://..." className="w-full border p-3 rounded-lg" />
+        <label htmlFor="hf-image" className="text-sm font-bold text-gray-700 mt-3 block">대표 이미지 URL</label>
+        <input id="hf-image" value={form.image} onChange={(e) => set("image", e.target.value)} placeholder="https://..." className="w-full border p-3 rounded-lg" />
         <label className="flex items-center gap-2 mt-3 text-sm font-bold">
           <input type="checkbox" checked={form.isPublished} onChange={(e) => set("isPublished", e.target.checked)} /> 공개(환자화면 노출)
         </label>
@@ -126,9 +126,10 @@ export default function HospitalForm({
           <h3 className="font-bold">의료진</h3>
           <button type="button" onClick={addDoctor} className="text-sm bg-gray-900 text-white px-3 py-1 rounded">+ 추가</button>
         </div>
+        {/* key=index 의도적: 행 데이터는 모두 form state에 있어 삭제 시 데이터 꼬임 없음(탭 표시만 cosmetic) */}
         {form.doctors.map((d, i) => (
           <div key={i} className="border rounded-lg p-3 mb-3">
-            <div className="flex justify-end"><button type="button" onClick={() => set("doctors", form.doctors.filter((_, idx) => idx !== i))} className="text-red-500 text-sm">삭제</button></div>
+            <div className="flex justify-end"><button type="button" onClick={() => setForm((f) => ({ ...f, doctors: f.doctors.filter((_, idx) => idx !== i) }))} className="text-red-500 text-sm">삭제</button></div>
             <I18nField label={`의료진 ${i + 1} 이름`} value={d.name} onChange={(v) => setDoctor(i, { ...d, name: v })} />
             <I18nField label="전문분야" value={d.specialty} onChange={(v) => setDoctor(i, { ...d, specialty: v })} />
             <input value={d.image} onChange={(e) => setDoctor(i, { ...d, image: e.target.value })} placeholder="사진 URL(선택)" className="w-full border p-2 rounded" />
@@ -141,9 +142,10 @@ export default function HospitalForm({
           <h3 className="font-bold">시술/가격</h3>
           <button type="button" onClick={addMenu} className="text-sm bg-gray-900 text-white px-3 py-1 rounded">+ 추가</button>
         </div>
+        {/* key=index 의도적: 행 데이터는 모두 form state에 있어 삭제 시 데이터 꼬임 없음(탭 표시만 cosmetic) */}
         {form.menus.map((m, i) => (
           <div key={i} className="border rounded-lg p-3 mb-3">
-            <div className="flex justify-end"><button type="button" onClick={() => set("menus", form.menus.filter((_, idx) => idx !== i))} className="text-red-500 text-sm">삭제</button></div>
+            <div className="flex justify-end"><button type="button" onClick={() => setForm((f) => ({ ...f, menus: f.menus.filter((_, idx) => idx !== i) }))} className="text-red-500 text-sm">삭제</button></div>
             <I18nField label={`시술 ${i + 1} 명`} value={m.name} onChange={(v) => setMenu(i, { ...m, name: v })} />
             <div className="grid grid-cols-2 gap-2 mb-2">
               <div><label className="text-xs font-bold">비교 카테고리</label><input value={m.category} onChange={(e) => setMenu(i, { ...m, category: e.target.value })} placeholder="LIFTING" className="w-full border p-2 rounded" /></div>
