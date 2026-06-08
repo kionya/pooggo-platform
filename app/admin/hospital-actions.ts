@@ -63,6 +63,7 @@ export async function updateHospital(id: string, input: HospitalInput): Promise<
       where: { id },
       data: {
         ...scalarData(input),
+        // deleteMany는 이 병원의 의사/메뉴로 자동 스코프됨(부모 update where: {id})
         doctors: { deleteMany: {}, create: doctorsCreate(input) },
         menus: { deleteMany: {}, create: menusCreate(input) },
       },
@@ -76,23 +77,32 @@ export async function updateHospital(id: string, input: HospitalInput): Promise<
   }
 }
 
-export async function deleteHospital(id: string): Promise<void> {
+export async function deleteHospital(id: string): Promise<{ ok: boolean; error?: string }> {
   await requireAdmin();
   try {
-    await db.menu.deleteMany({ where: { hospitalId: id } });
-    await db.doctor.deleteMany({ where: { hospitalId: id } });
-    await db.review.deleteMany({ where: { hospitalId: id } });
-    await db.hospital.delete({ where: { id } });
+    await db.$transaction(async (tx) => {
+      await tx.menu.deleteMany({ where: { hospitalId: id } });
+      await tx.doctor.deleteMany({ where: { hospitalId: id } });
+      await tx.review.deleteMany({ where: { hospitalId: id } });
+      await tx.treatment.deleteMany({ where: { hospitalId: id } });
+      await tx.hospital.delete({ where: { id } });
+    });
     revalidatePath("/admin/hospitals");
     revalidatePath("/");
-  } catch (e) {
+    return { ok: true };
+  } catch (e: any) {
     console.error("병원 삭제 실패(연결된 상담/예약 존재 가능):", e);
+    return { ok: false, error: e?.message ?? String(e) };
   }
 }
 
 export async function togglePublish(id: string, next: boolean): Promise<void> {
   await requireAdmin();
-  await db.hospital.update({ where: { id }, data: { isPublished: next } });
-  revalidatePath("/admin/hospitals");
-  revalidatePath("/");
+  try {
+    await db.hospital.update({ where: { id }, data: { isPublished: next } });
+    revalidatePath("/admin/hospitals");
+    revalidatePath("/");
+  } catch (e) {
+    console.error("공개 토글 실패:", e);
+  }
 }
