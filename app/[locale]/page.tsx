@@ -1,10 +1,14 @@
-import { 
-  Phone, Calendar, ShieldCheck, Star, CheckCircle, ArrowRight, 
-  Globe, Plane, Languages, HeartHandshake, Award 
+import {
+  Phone, Calendar, ShieldCheck, Star, CheckCircle, ArrowRight,
+  Globe, Plane, Languages, HeartHandshake, Award
 } from "lucide-react";
-import HospitalMainSection from "@/components/HospitalMainSection"; 
+import HospitalMainSection from "@/components/HospitalMainSection";
+import { setRequestLocale } from "next-intl/server";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       
@@ -17,13 +21,8 @@ export default function Home() {
           </div>
           
           <div className="flex items-center gap-4">
-            {/* 언어 선택 (디자인 요소) */}
-            <div className="hidden md:flex items-center gap-3 text-sm font-bold text-gray-400">
-              <span className="text-gray-900 cursor-pointer">KR</span>
-              <span className="hover:text-gray-900 cursor-pointer transition">EN</span>
-              <span className="hover:text-gray-900 cursor-pointer transition">CN</span>
-              <span className="hover:text-gray-900 cursor-pointer transition">JP</span>
-            </div>
+            {/* 언어 선택 */}
+            <div className="hidden md:flex"><LocaleSwitcher /></div>
             <a href="#hospitals" className="bg-gray-900 text-white px-5 py-2 rounded-full font-bold text-sm hover:bg-gray-800 transition">
               Book Consultation
             </a>

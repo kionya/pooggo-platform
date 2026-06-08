@@ -1,17 +1,18 @@
 import { getHospitalById, addReview } from "@/app/actions";
 import { Star, User, DollarSign, MapPin, ArrowLeft, MessageSquare } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { resolveText } from "@/lib/i18n/text";
+import { setRequestLocale } from "next-intl/server";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; locale: string }>;
 };
 
 export default async function HospitalDetailPage(props: Props) {
   // ⭐⭐ 여기가 핵심입니다! await으로 기다렸다가 ID를 꺼내야 합니다.
-  const params = await props.params;
-  const hospitalId = params.id;
+  const { id: hospitalId, locale } = await props.params;
+  setRequestLocale(locale);
   
   // 데이터 가져오기
   const hospital = await getHospitalById(hospitalId);
@@ -51,15 +52,15 @@ export default async function HospitalDetailPage(props: Props) {
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="bg-white sticky top-0 z-10 px-4 h-14 flex items-center shadow-sm">
         <Link href="/hospitals" className="mr-4"><ArrowLeft className="w-6 h-6" /></Link>
-        <h1 className="font-bold text-lg truncate">{resolveText(hospital.name, "ko")}</h1>
+        <h1 className="font-bold text-lg truncate">{resolveText(hospital.name, locale)}</h1>
       </div>
 
       <div className="relative h-64 bg-gray-200">
-        <img src={hospital.image || ""} alt={resolveText(hospital.name, "ko")} className="w-full h-full object-cover" />
+        <img src={hospital.image || ""} alt={resolveText(hospital.name, locale)} className="w-full h-full object-cover" />
         <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-6 pt-20">
-          <h2 className="text-white text-2xl font-bold">{resolveText(hospital.name, "ko")}</h2>
+          <h2 className="text-white text-2xl font-bold">{resolveText(hospital.name, locale)}</h2>
           <div className="flex items-center text-white/90 text-sm mt-1">
-            <MapPin className="w-4 h-4 mr-1" /> {resolveText(hospital.address, "ko")}
+            <MapPin className="w-4 h-4 mr-1" /> {resolveText(hospital.address, locale)}
           </div>
         </div>
       </div>
@@ -72,7 +73,7 @@ export default async function HospitalDetailPage(props: Props) {
             </div>
             <span className="text-gray-400 text-sm">리뷰 {hospital.userReviews?.length || 0}개</span>
           </div>
-          <p className="text-gray-600 leading-relaxed">{resolveText(hospital.intro, "ko")}</p>
+          <p className="text-gray-600 leading-relaxed">{resolveText(hospital.intro, locale)}</p>
           <div className="flex flex-wrap gap-2 mt-4">
             {tagsArray.map((tag, idx) => (
               <span key={idx} className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">#{tag}</span>
@@ -90,8 +91,8 @@ export default async function HospitalDetailPage(props: Props) {
                   <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-2 overflow-hidden bg-gray-100 flex items-center justify-center text-2xl">
                      👨‍⚕️
                   </div>
-                  <div className="font-bold text-sm text-gray-900 mt-2">{resolveText(doc.name, "ko")}</div>
-                  <div className="text-xs text-gray-500">{resolveText(doc.specialty, "ko")}</div>
+                  <div className="font-bold text-sm text-gray-900 mt-2">{resolveText(doc.name, locale)}</div>
+                  <div className="text-xs text-gray-500">{resolveText(doc.specialty, locale)}</div>
                 </div>
               ))}
             </div>
@@ -107,8 +108,8 @@ export default async function HospitalDetailPage(props: Props) {
             <ul className="space-y-3">
               {hospital.menus.map((menu) => (
                 <li key={menu.id} className="flex justify-between items-center border-b border-gray-50 pb-3 last:border-0">
-                  <span className="text-gray-700 font-medium">{resolveText(menu.name, "ko")}</span>
-                  <span className="font-bold text-blue-600">{resolveText(menu.priceText, "ko")}</span>
+                  <span className="text-gray-700 font-medium">{resolveText(menu.name, locale)}</span>
+                  <span className="font-bold text-blue-600">{resolveText(menu.priceText, locale)}</span>
                 </li>
               ))}
             </ul>

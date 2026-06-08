@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Star, MapPin, Check, Plus, ArrowRight, X } from "lucide-react";
 import { getHospitals, createConsultation } from "@/app/actions";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 interface Hospital {
   id: string;
