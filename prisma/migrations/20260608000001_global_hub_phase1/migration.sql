@@ -1,3 +1,4 @@
+-- 주의: 신규 NOT NULL 컬럼에 default 없음 → 비어있는 테이블에서만 적용 가능. 비어있지 않은 환경은 'prisma migrate reset --force' 필요.
 -- AlterTable
 ALTER TABLE "Doctor" ADD COLUMN     "order" INTEGER NOT NULL DEFAULT 0,
 DROP COLUMN "name",

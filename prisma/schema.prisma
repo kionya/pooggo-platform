@@ -45,6 +45,7 @@ model Hospital {
   category  String
   tags      String
 
+  // image=대표 썸네일, images=갤러리(추가 사진)
   image     String
   images    String[]
 
@@ -52,6 +53,7 @@ model Hospital {
   reviews   Int      @default(0)
 
   operatingHours Json
+  // { whatsapp, line, wechat, kakao, messenger, phone, email }
   messengers     Json
 
   isPublished Boolean @default(false)
@@ -64,6 +66,9 @@ model Hospital {
   userReviews Review[]
   treatments  Treatment[]
   leads       Lead[]
+
+  @@index([city, category])
+  @@index([isPublished])
 }
 
 // 👨‍⚕️ 의사 선생님 정보
@@ -75,6 +80,8 @@ model Doctor {
   order      Int      @default(0)
   hospitalId String
   hospital   Hospital @relation(fields: [hospitalId], references: [id])
+
+  @@index([hospitalId])
 }
 
 // 📋 시술 메뉴/가격표
@@ -88,6 +95,8 @@ model Menu {
   order      Int      @default(0)
   hospitalId String
   hospital   Hospital @relation(fields: [hospitalId], references: [id])
+
+  @@index([hospitalId])
 }
 
 // ⭐ 후기(리뷰) 시스템
