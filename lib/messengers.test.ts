@@ -26,4 +26,12 @@ describe("buildMessengerLinks", () => {
   it("빈 문자열 채널은 제외", () => {
     expect(buildMessengerLinks({ whatsapp: "", line: "  " })).toEqual([]);
   });
+  it("line ID는 line.me 링크", () => {
+    const r = buildMessengerLinks({ line: "richdoc" });
+    expect(r[0]).toMatchObject({ kind: "link", channel: "line", url: "https://line.me/R/ti/p/richdoc" });
+  });
+  it("kakao URL이면 링크, plain ID면 복사", () => {
+    expect(buildMessengerLinks({ kakao: "https://pf.kakao.com/_abc" })[0]).toMatchObject({ kind: "link", channel: "kakao", url: "https://pf.kakao.com/_abc" });
+    expect(buildMessengerLinks({ kakao: "richdoc_kr" })[0]).toMatchObject({ kind: "copy", channel: "kakao", value: "richdoc_kr" });
+  });
 });

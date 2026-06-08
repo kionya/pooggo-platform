@@ -22,7 +22,7 @@ export default function MessengerButtons({ messengers }: { messengers: Record<st
             </a>
           ) : (
             <button key={l.channel} type="button"
-              onClick={() => { navigator.clipboard?.writeText(l.value); setCopied(l.channel); }}
+              onClick={() => { navigator.clipboard?.writeText(l.value); setCopied(l.channel); setTimeout(() => setCopied(null), 2000); }}
               className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-bold hover:bg-gray-200">
               {l.label}: {l.value} ({copied === l.channel ? t("copied") : t("copy")})
             </button>
