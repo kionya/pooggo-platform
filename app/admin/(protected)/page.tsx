@@ -1,0 +1,28 @@
+import { db } from "@/lib/db";
+import Link from "next/link";
+
+export default async function AdminDashboard() {
+  const [hospitals, published, consultations] = await Promise.all([
+    db.hospital.count(),
+    db.hospital.count({ where: { isPublished: true } }),
+    db.consultation.count(),
+  ]);
+  const cards = [
+    { label: "전체 병원", value: hospitals, href: "/admin/hospitals" },
+    { label: "공개 병원", value: published, href: "/admin/hospitals" },
+    { label: "상담 신청", value: consultations, href: "/admin/consultations" },
+  ];
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-6">대시보드</h1>
+      <div className="grid grid-cols-3 gap-4">
+        {cards.map((c) => (
+          <Link key={c.label} href={c.href} className="bg-white p-6 rounded-xl border hover:shadow-md transition">
+            <div className="text-sm text-gray-500">{c.label}</div>
+            <div className="text-3xl font-bold mt-2">{c.value}</div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
