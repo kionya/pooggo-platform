@@ -74,6 +74,6 @@ export async function createBooking(formData: FormData): Promise<{ ok: boolean; 
   }));
   await sendBookingNotifications(notifyRows, hospitalsById);
 
-  if (groupId) redirect(`/booking/success?group=${groupId}`);
-  redirect(`/booking/success?code=${created[0].code}`);
+  if (groupId) redirect(`/${input.locale}/booking/success?group=${groupId}`);
+  redirect(`/${input.locale}/booking/success?code=${created[0].code}`);
 }
