@@ -29,31 +29,50 @@ model User {
 // 2. 병원 정보
 model Hospital {
   id        String   @id @default(uuid())
-  name      String
-  location  String
-  tags      String
-  rating    Float
-  reviews   Int      @default(0) // 리뷰 수 자동 카운트
-  image     String
-  desc      String
-  createdAt DateTime @default(now())
+  slug      String   @unique
 
-  // 👇 추가된 관계들
-  doctors   Doctor[]
-  menus     Menu[]
+  name      Json
+  intro     Json
+  about     Json
+  address   Json
+  cautions  Json
+
+  city      String
+  district  String
+  lat       Float?
+  lng       Float?
+
+  category  String
+  tags      String
+
+  image     String
+  images    String[]
+
+  rating    Float    @default(0)
+  reviews   Int      @default(0)
+
+  operatingHours Json
+  messengers     Json
+
+  isPublished Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctors     Doctor[]
+  menus       Menu[]
   userReviews Review[]
-  
-  // 기존 관계 유지
-  treatments Treatment[]
-  leads      Lead[]
+  treatments  Treatment[]
+  leads       Lead[]
 }
 
 // 👨‍⚕️ 의사 선생님 정보
 model Doctor {
   id         String   @id @default(uuid())
-  name       String
-  specialty  String   // 전문 분야 (예: 코성형 전문)
-  image      String?  // 의사 사진
+  name       Json
+  specialty  Json
+  image      String?
+  order      Int      @default(0)
   hospitalId String
   hospital   Hospital @relation(fields: [hospitalId], references: [id])
 }
@@ -61,8 +80,12 @@ model Doctor {
 // 📋 시술 메뉴/가격표
 model Menu {
   id         String   @id @default(uuid())
-  name       String   // 시술명
-  price      String   // 가격 (예: 100만원~)
+  name       Json
+  category   String   @default("ETC")
+  price      Int?
+  priceText  Json
+  currency   String   @default("KRW")
+  order      Int      @default(0)
   hospitalId String
   hospital   Hospital @relation(fields: [hospitalId], references: [id])
 }
