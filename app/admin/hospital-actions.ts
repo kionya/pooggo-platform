@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { requireAdmin } from "./auth-actions";
+import { requireRole } from "@/lib/auth/guard";
 import { validateHospitalInput } from "@/lib/hospital/validation";
 import type { HospitalInput } from "@/lib/hospital/types";
 
@@ -35,7 +35,7 @@ function menusCreate(input: HospitalInput) {
 }
 
 export async function createHospital(input: HospitalInput): Promise<Result> {
-  await requireAdmin();
+  await requireRole(["SUPER_ADMIN"]);
   const errors = validateHospitalInput(input);
   if (errors.length) return { ok: false, errors };
   try {
@@ -55,7 +55,7 @@ export async function createHospital(input: HospitalInput): Promise<Result> {
 }
 
 export async function updateHospital(id: string, input: HospitalInput): Promise<Result> {
-  await requireAdmin();
+  await requireRole(["SUPER_ADMIN"]);
   const errors = validateHospitalInput(input);
   if (errors.length) return { ok: false, errors };
   try {
@@ -78,7 +78,7 @@ export async function updateHospital(id: string, input: HospitalInput): Promise<
 }
 
 export async function deleteHospital(id: string): Promise<{ ok: boolean; error?: string }> {
-  await requireAdmin();
+  await requireRole(["SUPER_ADMIN"]);
   try {
     await db.$transaction(async (tx) => {
       await tx.menu.deleteMany({ where: { hospitalId: id } });
@@ -98,7 +98,7 @@ export async function deleteHospital(id: string): Promise<{ ok: boolean; error?:
 }
 
 export async function togglePublish(id: string, next: boolean): Promise<void> {
-  await requireAdmin();
+  await requireRole(["SUPER_ADMIN"]);
   try {
     await db.hospital.update({ where: { id }, data: { isPublished: next } });
     revalidatePath("/admin/hospitals");

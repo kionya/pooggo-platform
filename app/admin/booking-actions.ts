@@ -2,11 +2,11 @@
 
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { requireAdmin } from "./auth-actions";
+import { requireRole } from "@/lib/auth/guard";
 import { canTransition } from "@/lib/booking/status";
 
 export async function updateBookingStatus(id: string, next: string): Promise<void> {
-  await requireAdmin();
+  await requireRole(["SUPER_ADMIN"]);
   const b = await db.booking.findUnique({ where: { id } });
   if (!b) return;
   if (!canTransition(b.status, next)) {
