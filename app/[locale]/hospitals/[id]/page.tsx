@@ -6,6 +6,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import MessengerButtons from "@/components/hospitals/MessengerButtons";
 import OperatingHoursTable from "@/components/hospitals/OperatingHoursTable";
 import TierBadge from "@/components/hospitals/TierBadge";
+import ComplianceNotice from "@/components/ComplianceNotice";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
@@ -17,6 +18,7 @@ export default async function HospitalDetailPage(props: Props) {
   const { id: hospitalId, locale } = await props.params;
   setRequestLocale(locale);
   const tTier = await getTranslations("Tier");
+  const tCompliance = await getTranslations("Compliance");
 
   // 데이터 가져오기
   const hospital = await getHospitalById(hospitalId);
@@ -118,9 +120,19 @@ export default async function HospitalDetailPage(props: Props) {
                 </li>
               ))}
             </ul>
+            <ComplianceNotice k="priceDisclaimer" className="mt-3" />
           </div>
         )}
 
+        {(() => {
+          const c = resolveText(hospital.cautions, locale);
+          return c ? (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-4">
+              <h3 className="font-bold text-lg mb-2 text-amber-900">{tCompliance("cautionsTitle")}</h3>
+              <p className="text-sm text-gray-700 whitespace-pre-line">{c}</p>
+            </div>
+          ) : null;
+        })()}
         <OperatingHoursTable hours={hospital.operatingHours} />
         <MessengerButtons messengers={hospital.messengers as Record<string, string>} />
         {hospital.tier === "BENEFIT" && resolveText(hospital.benefits, locale) && (
@@ -132,7 +144,7 @@ export default async function HospitalDetailPage(props: Props) {
 
         <div className="bg-white rounded-xl p-6 shadow-sm mb-20">
           <h3 className="font-bold text-lg mb-4 flex items-center"><MessageSquare className="w-5 h-5 mr-2 text-blue-600"/> 실제 후기</h3>
-          
+          <ComplianceNotice k="reviewDisclaimer" className="mb-3" />
           <form action={submitReview} className="mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
             <div className="mb-3">
               <input name="userName" placeholder="이름 (익명)" className="border p-3 rounded-lg w-full mb-2" required />
