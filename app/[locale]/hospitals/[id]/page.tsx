@@ -19,6 +19,7 @@ export default async function HospitalDetailPage(props: Props) {
   setRequestLocale(locale);
   const tTier = await getTranslations("Tier");
   const tCompliance = await getTranslations("Compliance");
+  const tDetail = await getTranslations("Detail");
 
   // 데이터 가져오기
   const hospital = await getHospitalById(hospitalId);
@@ -28,7 +29,7 @@ export default async function HospitalDetailPage(props: Props) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center">
         <div className="bg-red-50 p-6 rounded-xl border border-red-200 mb-6 max-w-md">
-          <h2 className="text-xl font-bold text-red-600 mb-2">⚠ 병원을 찾을 수 없습니다.</h2>
+          <h2 className="text-xl font-bold text-red-600 mb-2">⚠ {tDetail("notFoundTitle")}</h2>
           <p className="text-gray-600 mb-4">요청하신 ID가 데이터베이스에 없습니다.</p>
           <div className="bg-white p-3 rounded border text-xs text-left font-mono text-gray-500 break-all">
             {/* ID가 비어있는지 확인하는 디버깅용 코드 */}
@@ -36,7 +37,7 @@ export default async function HospitalDetailPage(props: Props) {
           </div>
         </div>
         <Link href="/hospitals" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition">
-          목록으로 돌아가서 다시 선택하기
+          {tDetail("backToList")}
         </Link>
       </div>
     );
@@ -91,7 +92,7 @@ export default async function HospitalDetailPage(props: Props) {
         {/* 의료진 정보 */}
         {hospital.doctors && hospital.doctors.length > 0 && (
           <div className="bg-white rounded-xl p-6 shadow-sm mb-4">
-            <h3 className="font-bold text-lg mb-4 flex items-center"><User className="w-5 h-5 mr-2 text-blue-600"/> 대표 의료진</h3>
+            <h3 className="font-bold text-lg mb-4 flex items-center"><User className="w-5 h-5 mr-2 text-blue-600"/> {tDetail("doctorsTitle")}</h3>
             <div className="flex gap-4 overflow-x-auto pb-2">
               {hospital.doctors.map(doc => (
                 <div key={doc.id} className="flex-shrink-0 w-24 text-center">
@@ -110,7 +111,7 @@ export default async function HospitalDetailPage(props: Props) {
         {hospital.menus && hospital.menus.length > 0 && (
           <div className="bg-white rounded-xl p-6 shadow-sm mb-4">
             <h3 className="font-bold text-lg mb-4 flex items-center">
-              <DollarSign className="w-5 h-5 mr-2 text-blue-600"/> 주요 시술 가격
+              <DollarSign className="w-5 h-5 mr-2 text-blue-600"/> {tDetail("pricesTitle")}
             </h3>
             <ul className="space-y-3">
               {hospital.menus.map((menu) => (
@@ -143,24 +144,24 @@ export default async function HospitalDetailPage(props: Props) {
         )}
 
         <div className="bg-white rounded-xl p-6 shadow-sm mb-20">
-          <h3 className="font-bold text-lg mb-4 flex items-center"><MessageSquare className="w-5 h-5 mr-2 text-blue-600"/> 실제 후기</h3>
+          <h3 className="font-bold text-lg mb-4 flex items-center"><MessageSquare className="w-5 h-5 mr-2 text-blue-600"/> {tDetail("reviewsTitle")}</h3>
           <ComplianceNotice k="reviewDisclaimer" className="mb-3" />
           <form action={submitReview} className="mb-8 bg-gray-50 p-4 rounded-xl border border-gray-100">
             <div className="mb-3">
-              <input name="userName" placeholder="이름 (익명)" className="border p-3 rounded-lg w-full mb-2" required />
+              <input name="userName" placeholder={tDetail("reviewName")} className="border p-3 rounded-lg w-full mb-2" required />
               <select name="rating" className="border p-3 rounded-lg w-full mb-2 bg-white">
-                <option value="5">⭐⭐⭐⭐⭐ (최고예요)</option>
-                <option value="4">⭐⭐⭐⭐ (좋아요)</option>
-                <option value="3">⭐⭐⭐ (보통이에요)</option>
+                <option value="5">{`⭐⭐⭐⭐⭐ (${tDetail("ratingGreat")})`}</option>
+                <option value="4">{`⭐⭐⭐⭐ (${tDetail("ratingGood")})`}</option>
+                <option value="3">{`⭐⭐⭐ (${tDetail("ratingOk")})`}</option>
               </select>
-              <textarea name="content" placeholder="솔직한 후기를 남겨주세요" className="border p-3 rounded-lg w-full h-24 resize-none" required></textarea>
+              <textarea name="content" placeholder={tDetail("reviewContent")} className="border p-3 rounded-lg w-full h-24 resize-none" required></textarea>
             </div>
-            <button className="bg-blue-600 text-white px-4 py-3 rounded-xl text-sm w-full font-bold">후기 등록</button>
+            <button className="bg-blue-600 text-white px-4 py-3 rounded-xl text-sm w-full font-bold">{tDetail("reviewSubmit")}</button>
           </form>
 
           <div className="space-y-6">
             {(!hospital.userReviews || hospital.userReviews.length === 0) ? (
-              <p className="text-gray-400 text-center text-sm py-4">아직 등록된 후기가 없습니다.</p>
+              <p className="text-gray-400 text-center text-sm py-4">{tDetail("noReviews")}</p>
             ) : (
               hospital.userReviews.map((review) => (
                 <div key={review.id} className="border-b border-gray-100 pb-4">
@@ -179,7 +180,7 @@ export default async function HospitalDetailPage(props: Props) {
 
       <div className="fixed bottom-0 w-full bg-white border-t p-4 z-20 safe-area-bottom">
         <Link href={`/booking?hospital=${hospital.id}`} className="block w-full bg-blue-600 text-white font-bold py-4 rounded-xl text-lg shadow-xl text-center">
-          이 병원 예약하기
+          {tDetail("bookThisClinic")}
         </Link>
       </div>
     </div>
