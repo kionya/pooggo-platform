@@ -4,6 +4,7 @@ import { resolveText } from "@/lib/i18n/text";
 import { Link } from "@/i18n/navigation";
 import TierBadge from "@/components/hospitals/TierBadge";
 import { Star, MapPin } from "lucide-react";
+import ComplianceNotice from "@/components/ComplianceNotice";
 
 export default async function ComparePage({
   params,
@@ -16,6 +17,7 @@ export default async function ComparePage({
   setRequestLocale(locale);
   const { ids } = await searchParams;
   const t = await getTranslations("Compare");
+  const tc = await getTranslations("Compliance");
 
   const idList = (ids ?? "")
     .split(",")
@@ -121,7 +123,7 @@ export default async function ComparePage({
                             </div>
                             <div className="text-sm">
                               {resolveText(m.priceText, locale) || "-"}{" "}
-                              {isLowest ? `(${t("lowest")})` : ""}
+                              {isLowest ? `(${t("lowest")} · ${tc("lowestNote")})` : ""}
                             </div>
                           </>
                         ) : (
@@ -136,6 +138,7 @@ export default async function ComparePage({
           </tbody>
         </table>
       </div>
+      <ComplianceNotice k="priceDisclaimer" className="mt-4" />
       <div className="mt-6">
         <Link href="/hospitals" className="text-blue-600 underline">
           {t("back")}
