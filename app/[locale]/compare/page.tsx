@@ -110,11 +110,7 @@ export default async function ComparePage({
                     return (
                       <td
                         key={i}
-                        className={`p-3 ${
-                          isLowest
-                            ? "bg-green-50 font-bold text-green-700"
-                            : ""
-                        }`}
+                        className="p-3"
                       >
                         {m ? (
                           <>
@@ -123,7 +119,7 @@ export default async function ComparePage({
                             </div>
                             <div className="text-sm">
                               {resolveText(m.priceText, locale) || "-"}{" "}
-                              {isLowest ? `(${t("lowest")} · ${tc("lowestNote")})` : ""}
+                              {isLowest ? `(${tc("lowestNote")})` : ""}
                             </div>
                           </>
                         ) : (
