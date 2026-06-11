@@ -10,3 +10,12 @@ export async function requireRole(allowed: string[]) {
   }
   return session;
 }
+
+// 병원 포털 가드: HOSPITAL 역할 + hospitalId 보유. 불충족 시 /hospital/login.
+export async function requireHospital() {
+  const session = await auth();
+  if (!session || !hasRole(session.user?.role, ["HOSPITAL"]) || !session.user?.hospitalId) {
+    redirect("/hospital/login");
+  }
+  return session;
+}
