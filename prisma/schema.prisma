@@ -25,6 +25,7 @@ model User {
   status        String    @default("ACTIVE")
 
   leads         Lead[]
+  reviews       Review[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -113,13 +114,17 @@ model Menu {
 
 // ⭐ 후기(리뷰) 시스템
 model Review {
-  id         String   @id @default(uuid())
-  userName   String   // 작성자 이름 (익명 가능)
-  rating     Int      // 1~5점
-  content    String   // 후기 내용
-  hospitalId String
-  hospital   Hospital @relation(fields: [hospitalId], references: [id])
-  createdAt  DateTime @default(now())
+  id           String   @id @default(uuid())
+  userName     String   // 작성자 이름 (익명 레거시 보존; 신규는 계정명)
+  rating       Int      // 1~5점
+  content      String   // 후기 내용
+  hospitalId   String
+  hospital     Hospital @relation(fields: [hospitalId], references: [id])
+  authorUserId String?  // 신규: 로그인 작성자 (nullable, 기존 익명 후기 보존)
+  author       User?    @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+
+  @@index([authorUserId])
 }
 
 // 3. 시술 상품 (예: 울쎄라 300샷, 코수술 등)

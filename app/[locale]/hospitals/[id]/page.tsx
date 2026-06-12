@@ -7,6 +7,10 @@ import MessengerButtons from "@/components/hospitals/MessengerButtons";
 import OperatingHoursTable from "@/components/hospitals/OperatingHoursTable";
 import TierBadge from "@/components/hospitals/TierBadge";
 import ComplianceNotice from "@/components/ComplianceNotice";
+import { auth } from "@/auth";
+import { canViewReviews } from "@/lib/reviews/access";
+import ReviewForm from "@/components/hospitals/ReviewForm";
+import AccountNav from "@/components/AccountNav";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
@@ -46,11 +50,16 @@ export default async function HospitalDetailPage(props: Props) {
   // 안전장치
   const tagsArray = (hospital.tags || "").split(',');
 
+  // 후기 로그인 게이팅: 로그인(PATIENT/HOSPITAL/SUPER_ADMIN)만 열람·작성
+  const session = await auth();
+  const canView = canViewReviews(session?.user?.role);
+
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
       <div className="bg-white sticky top-0 z-10 px-4 h-14 flex items-center shadow-sm">
         <Link href="/hospitals" className="mr-4"><ArrowLeft className="w-6 h-6" /></Link>
-        <h1 className="font-bold text-lg truncate">{resolveText(hospital.name, locale)}</h1>
+        <h1 className="font-bold text-lg truncate flex-1">{resolveText(hospital.name, locale)}</h1>
+        <AccountNav />
       </div>
 
       <div className="relative h-64 bg-gray-200">
@@ -70,7 +79,7 @@ export default async function HospitalDetailPage(props: Props) {
             <div className="flex items-center text-yellow-500 font-bold text-lg">
               <Star className="w-5 h-5 fill-current mr-1" /> {hospital.rating}
             </div>
-            <span className="text-gray-400 text-sm">리뷰 {hospital.userReviews?.length || 0}개</span>
+            <span className="text-gray-400 text-sm">{canView ? `리뷰 ${hospital.userReviews?.length || 0}개` : ""}</span>
           </div>
           <p className="text-gray-600 leading-relaxed">{resolveText(hospital.intro, locale)}</p>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -136,7 +145,37 @@ export default async function HospitalDetailPage(props: Props) {
 
         <div className="bg-white rounded-xl p-6 shadow-sm mb-20">
           <h3 className="font-bold text-lg mb-4 flex items-center"><MessageSquare className="w-5 h-5 mr-2 text-blue-600"/> {tDetail("reviewsTitle")}</h3>
-          <p className="text-gray-400 text-sm text-center py-6">{tDetail("reviewsComingSoon")}</p>
+          {canView ? (
+            <>
+              {hospital.userReviews && hospital.userReviews.length > 0 ? (
+                <ul className="space-y-4">
+                  {hospital.userReviews.map((rv) => (
+                    <li key={rv.id} className="border-b border-gray-50 pb-4 last:border-0">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-gray-800">{rv.userName}</span>
+                        <span className="flex items-center text-yellow-500 text-sm font-bold">
+                          <Star className="w-4 h-4 fill-current mr-1" /> {rv.rating}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-1 whitespace-pre-line">{rv.content}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-400 text-sm text-center py-4">{tDetail("noReviews")}</p>
+              )}
+              <ReviewForm hospitalId={hospital.id} />
+              <ComplianceNotice k="reviewDisclaimer" className="mt-3" />
+            </>
+          ) : (
+            <div className="text-center py-6">
+              <p className="text-gray-400 text-sm mb-3">{tDetail("reviewsLoginRequired")}</p>
+              <Link href="/account/login" className="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold">
+                {tDetail("reviewsTitle")}
+              </Link>
+              <ComplianceNotice k="reviewDisclaimer" className="mt-4" />
+            </div>
+          )}
         </div>
       </div>
 

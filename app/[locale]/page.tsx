@@ -2,6 +2,7 @@ import { Calendar, ShieldCheck, Globe, Plane, Languages, HeartHandshake } from "
 import HospitalMainSection from "@/components/HospitalMainSection";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
+import AccountNav from "@/components/AccountNav";
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -26,6 +27,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex"><LocaleSwitcher /></div>
+            <AccountNav />
             <a href="#hospitals" className="bg-gray-900 text-white px-5 py-2 rounded-full font-bold text-sm hover:bg-gray-800 transition">{t("bookConsultation")}</a>
           </div>
         </div>
