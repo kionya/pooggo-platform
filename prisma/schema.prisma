@@ -26,6 +26,9 @@ model User {
 
   leads         Lead[]
   reviews       Review[]
+  reports       Report[]
+  emailVerifyToken   String?
+  emailVerifyExpires DateTime?
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -122,9 +125,25 @@ model Review {
   hospital     Hospital @relation(fields: [hospitalId], references: [id])
   authorUserId String?  // 신규: 로그인 작성자 (nullable, 기존 익명 후기 보존)
   author       User?    @relation(fields: [authorUserId], references: [id], onDelete: SetNull)
+  isHidden     Boolean  @default(false) // 관리자 소프트숨김
+  reports      Report[]
   createdAt    DateTime @default(now())
 
   @@index([authorUserId])
+}
+
+// 후기 신고
+model Report {
+  id             String   @id @default(uuid())
+  reviewId       String
+  review         Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reporterUserId String?
+  reporter       User?    @relation(fields: [reporterUserId], references: [id], onDelete: SetNull)
+  reason         String?
+  createdAt      DateTime @default(now())
+
+  @@unique([reviewId, reporterUserId])
+  @@index([reviewId])
 }
 
 // 3. 시술 상품 (예: 울쎄라 300샷, 코수술 등)
