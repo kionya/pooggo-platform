@@ -5,6 +5,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { resolveText } from "@/lib/i18n/text";
 import { compareHospitalsByTier } from "@/lib/hospital/tier";
+import { auth } from "@/auth";
+import { canWriteReview } from "@/lib/reviews/access";
+import { validateReviewInput } from "@/lib/reviews/validation";
 
 // 1. 상담 신청 저장하기
 export async function createConsultation(formData: FormData) {
@@ -75,20 +78,31 @@ export async function getHospitalById(id: string) {
   }
 }
 
-// 4. 리뷰 작성하기
-export async function addReview(hospitalId: string, userName: string, rating: number, content: string) {
+// 4. 리뷰 작성하기 (로그인 필수, 계정 귀속)
+export async function addReview(formData: FormData): Promise<{ ok: boolean; errors: string[] }> {
+  const session = await auth();
+  if (!canWriteReview(session?.user?.role)) {
+    return { ok: false, errors: ["로그인이 필요합니다."] };
+  }
+
+  const hospitalId = String(formData.get("hospitalId") || "");
+  const rating = Number(formData.get("rating") || 0);
+  const content = String(formData.get("content") || "");
+
+  const errors = validateReviewInput({ rating, content });
+  if (errors.length) return { ok: false, errors };
+
+  const userName = session!.user.name || session!.user.email?.split("@")[0] || "회원";
+
   try {
     await db.review.create({
-      data: {
-        hospitalId,
-        userName,
-        rating,
-        content,
-      },
+      data: { hospitalId, userName, rating, content: content.trim(), authorUserId: session!.user.id },
     });
     revalidatePath(`/hospitals/${hospitalId}`);
   } catch (error) {
     console.error("리뷰 작성 실패:", error);
+    return { ok: false, errors: ["후기 등록에 실패했습니다."] };
   }
+  return { ok: true, errors: [] };
 }
 
