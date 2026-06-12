@@ -6,13 +6,13 @@ import { Link } from "@/i18n/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; verified?: string }>;
 };
 
 export default async function PatientLoginPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const { error } = await searchParams;
+  const { error, verified } = await searchParams;
   const t = await getTranslations("Account");
 
   async function doLogin(formData: FormData) {
@@ -33,6 +33,7 @@ export default async function PatientLoginPage({ params, searchParams }: Props) 
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
         <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t("loginTitle")}</h1>
+        {verified && <p className="text-green-600 text-sm mb-4 text-center">{t("verifiedBanner")}</p>}
         {error && <p className="text-red-500 text-sm mb-4 text-center">{t("loginFailed")}</p>}
         <form action={doLogin} className="space-y-4">
           <input name="email" type="email" placeholder={t("email")} required autoFocus className="w-full border border-gray-300 px-4 py-3 rounded-lg" />
