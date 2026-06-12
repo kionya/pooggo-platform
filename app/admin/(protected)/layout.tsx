@@ -13,6 +13,7 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
           <Link href="/admin/bookings" className="hover:text-blue-600">예약</Link>
           <Link href="/admin/consultations" className="hover:text-blue-600">상담내역</Link>
           <Link href="/admin/accounts" className="hover:text-blue-600">계정승인</Link>
+          <Link href="/admin/reviews" className="hover:text-blue-600">후기관리</Link>
         </nav>
         <form action={async () => { "use server"; await signOut({ redirectTo: "/admin/login" }); }}>
           <button className="text-sm text-gray-400 hover:text-gray-700">로그아웃</button>
