@@ -8,6 +8,7 @@ import { compareHospitalsByTier } from "@/lib/hospital/tier";
 import { auth } from "@/auth";
 import { canWriteReview } from "@/lib/reviews/access";
 import { validateReviewInput } from "@/lib/reviews/validation";
+import { canReport, validateReportReason } from "@/lib/reviews/report";
 
 // 1. 상담 신청 저장하기
 export async function createConsultation(formData: FormData) {
@@ -66,7 +67,7 @@ export async function getHospitalById(id: string) {
     const hospital = await db.hospital.findUnique({
       where: { id },
       include: {
-        userReviews: { orderBy: { createdAt: 'desc' } },
+        userReviews: { where: { isHidden: false }, orderBy: { createdAt: 'desc' } },
         doctors: true,
         menus: true,   // 👈 ⭐ 이 줄이 없으면 가격표가 절대 안 나옵니다! 꼭 확인하세요!
       },
@@ -102,6 +103,28 @@ export async function addReview(formData: FormData): Promise<{ ok: boolean; erro
   } catch (error) {
     console.error("리뷰 작성 실패:", error);
     return { ok: false, errors: ["후기 등록에 실패했습니다."] };
+  }
+  return { ok: true, errors: [] };
+}
+
+// 5. 후기 신고하기 (로그인 필수, 1인 1신고)
+export async function reportReview(formData: FormData): Promise<{ ok: boolean; errors: string[] }> {
+  const session = await auth();
+  if (!canReport(session?.user?.role)) return { ok: false, errors: ["로그인이 필요합니다."] };
+
+  const reviewId = String(formData.get("reviewId") || "");
+  const reason = String(formData.get("reason") || "");
+  const errors = validateReportReason(reason);
+  if (errors.length) return { ok: false, errors };
+
+  const review = await db.review.findUnique({ where: { id: reviewId } });
+  if (!review) return { ok: false, errors: ["후기를 찾을 수 없습니다."] };
+  if (review.authorUserId === session!.user.id) return { ok: false, errors: ["본인 후기는 신고할 수 없습니다."] };
+
+  try {
+    await db.report.create({ data: { reviewId, reporterUserId: session!.user.id, reason: reason.trim() || null } });
+  } catch {
+    return { ok: false, errors: ["이미 신고한 후기입니다."] };
   }
   return { ok: true, errors: [] };
 }
