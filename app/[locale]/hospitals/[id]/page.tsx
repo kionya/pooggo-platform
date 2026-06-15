@@ -12,6 +12,7 @@ import { canViewReviews } from "@/lib/reviews/access";
 import ReviewForm from "@/components/hospitals/ReviewForm";
 import AccountNav from "@/components/AccountNav";
 import ReportButton from "@/components/hospitals/ReportButton";
+import { Badge } from "@/components/ui/Badge";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
@@ -141,11 +142,9 @@ export default async function HospitalDetailPage(props: Props) {
           <div className="bg-gold-500/10 border border-gold-500/30 rounded-xl p-6 mb-4">
             <h3 className="font-bold text-lg mb-2 text-gold-600">★ {tTier("benefitsTitle")}</h3>
             <p className="text-navy-900 text-sm whitespace-pre-line">{resolveText(hospital.benefits, locale)}</p>
-            {hospital.tier === "BENEFIT" && (
-              <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-gold-500/10 px-3 py-1.5 text-sm font-bold text-gold-600">
-                <Ticket className="h-4 w-4" /> {tDetail("stampRedeemable")}
-              </div>
-            )}
+            <Badge tone="gold" className="mt-3">
+              <Ticket className="h-4 w-4" aria-hidden="true" /> {tDetail("stampRedeemable")}
+            </Badge>
           </div>
         )}
 
