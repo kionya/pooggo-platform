@@ -1,4 +1,4 @@
-import { forwardRef, cloneElement, isValidElement, type ButtonHTMLAttributes, type ReactElement } from "react";
+import { forwardRef, cloneElement, isValidElement, type ButtonHTMLAttributes, type ReactElement, type Ref } from "react";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
@@ -29,8 +29,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 ) {
   const cls = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
   if (asChild && isValidElement(children)) {
-    const child = children as ReactElement<{ className?: string }>;
-    return cloneElement(child, { className: `${cls} ${child.props.className ?? ""}`.trim() });
+    const child = children as ReactElement<{ className?: string; ref?: Ref<unknown> }>;
+    return cloneElement(child, { ...props, className: `${cls} ${child.props.className ?? ""}`.trim(), ref });
   }
   return (
     <button ref={ref} className={cls} {...props}>
