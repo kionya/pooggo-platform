@@ -67,7 +67,7 @@ export function RedeemForm({
       </label>
 
       {errors.length > 0 && (
-        <ul className="rounded-lg border border-clay-600/30 bg-clay-600/10 p-3 text-sm text-clay-700">
+        <ul role="alert" className="rounded-lg border border-clay-600/30 bg-clay-600/10 p-3 text-sm text-clay-700">
           {errors.map((e, i) => (
             <li key={i}>• {e}</li>
           ))}
