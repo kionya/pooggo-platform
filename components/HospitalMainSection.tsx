@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Star, MapPin, Check, Plus, ArrowRight } from "lucide-react";
 import { getHospitals } from "@/app/actions";
 import TierBadge from "@/components/hospitals/TierBadge";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { resolveText } from "@/lib/i18n/text";
 import { Link, useRouter } from "@/i18n/navigation";
 
@@ -13,6 +13,7 @@ export default function HospitalMainSection() {
   const [compareList, setCompareList] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const locale = useLocale();
+  const t = useTranslations("Hospitals");
   const router = useRouter();
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function HospitalMainSection() {
       setCompareList(compareList.filter((item) => item !== id));
     } else {
       if (compareList.length >= 3) {
-        alert("비교는 최대 3개까지만 가능합니다!");
+        alert(t("compareMax"));
         return;
       }
       setCompareList([...compareList, id]);
@@ -49,12 +50,12 @@ export default function HospitalMainSection() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <span className="text-gold-600 font-bold text-sm tracking-wide">PARTNERS</span>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold mt-2 mb-4 text-navy-900">제휴 병원 둘러보기</h2>
-          <p className="text-stone-500">원하는 병원을 선택해서 비교 견적을 받아보세요.</p>
+          <h2 className="font-serif text-3xl md:text-4xl font-bold mt-2 mb-4 text-navy-900">{t("sectionTitle")}</h2>
+          <p className="text-stone-500">{t("sectionSubtitle")}</p>
         </div>
 
         {isLoading ? (
-          <div className="text-center py-20 text-stone-400">병원 목록을 불러오는 중...</div>
+          <div className="text-center py-20 text-stone-400">{t("loading")}</div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {hospitals.map((hospital) => {
@@ -97,7 +98,7 @@ export default function HospitalMainSection() {
                         href={`/hospitals/${hospital.id}`}
                         className="flex-1 py-3 rounded-xl font-bold text-sm bg-cream border border-stone-200 text-navy-900 hover:bg-stone-100 flex items-center justify-center transition"
                       >
-                        상세보기
+                        {t("viewDetail")}
                       </Link>
                       <button
                         onClick={() => toggleCompare(hospital.id)}
@@ -107,7 +108,7 @@ export default function HospitalMainSection() {
                             : "bg-navy-900 text-cream hover:bg-navy-700"
                         }`}
                       >
-                        {isSelected ? <><Check className="w-4 h-4 mr-1"/> 담기</> : <><Plus className="w-4 h-4 mr-1"/> 담기</>}
+                        {isSelected ? <><Check className="w-4 h-4 mr-1"/> {t("added")}</> : <><Plus className="w-4 h-4 mr-1"/> {t("addCompare")}</>}
                       </button>
                     </div>
                   </div>
@@ -127,19 +128,19 @@ export default function HospitalMainSection() {
                 {compareList.length}
               </div>
               <div className="hidden sm:block">
-                <p className="font-bold text-navy-900 text-lg">병원 선택 완료</p>
-                <p className="text-sm text-stone-500">최대 3개까지 비교 가능</p>
+                <p className="font-bold text-navy-900 text-lg">{t("selectedTitle")}</p>
+                <p className="text-sm text-stone-500">{t("selectedHint")}</p>
               </div>
             </div>
             <div className="flex gap-2">
                <button onClick={() => setCompareList([])} className="px-4 text-stone-500 font-medium hover:text-navy-900 transition">
-                 초기화
+                 {t("reset")}
                </button>
                <button onClick={() => router.push(`/compare?ids=${compareList.join(",")}`)} className="bg-navy-900 text-cream px-8 py-3 rounded-xl font-bold text-lg hover:bg-navy-700 flex items-center shadow-lg transition transform hover:-translate-y-1">
-                 비교견적 받기 <ArrowRight className="w-5 h-5 ml-2" />
+                 {t("getQuote")} <ArrowRight className="w-5 h-5 ml-2" />
                </button>
                <button onClick={() => router.push(`/booking?hospitals=${compareList.join(",")}`)} className="bg-gold-500 text-navy-900 px-6 py-3 rounded-xl font-bold text-lg hover:bg-gold-600">
-                 예약요청
+                 {t("bookRequest")}
                </button>
             </div>
           </div>

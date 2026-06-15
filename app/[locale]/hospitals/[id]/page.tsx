@@ -81,7 +81,7 @@ export default async function HospitalDetailPage(props: Props) {
             <div className="flex items-center text-yellow-500 font-bold text-lg">
               <Star className="w-5 h-5 fill-current mr-1" /> {hospital.rating}
             </div>
-            <span className="text-stone-400 text-sm">{canView ? `리뷰 ${hospital.userReviews?.length || 0}개` : ""}</span>
+            <span className="text-stone-400 text-sm">{canView ? tDetail("reviewCount", { count: hospital.userReviews?.length || 0 }) : ""}</span>
           </div>
           <p className="text-stone-600 leading-relaxed">{resolveText(hospital.intro, locale)}</p>
           <div className="flex flex-wrap gap-2 mt-4">

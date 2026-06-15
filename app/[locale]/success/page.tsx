@@ -1,19 +1,29 @@
 import { Link } from "@/i18n/navigation";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 
-export default async function SuccessPage({ searchParams }: { searchParams: Promise<{ code?: string }> }) {
+export default async function SuccessPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ code?: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const { code } = await searchParams;
+  const t = await getTranslations("Booking");
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-ivory p-4">
       <div className="text-center">
         <div className="text-6xl mb-4">✅</div>
-        <h1 className="text-3xl font-bold font-serif text-navy-900 mb-2">접수가 완료되었습니다!</h1>
+        <h1 className="text-3xl font-bold font-serif text-navy-900 mb-2">{t("receivedTitle")}</h1>
         <p className="text-stone-600 mb-8">
-          예약 코드: <span className="font-mono font-bold text-teal-600">{code}</span>
+          {t("codeLabel")}: <span className="font-mono font-bold text-teal-600">{code}</span>
           <br />
-          담당 실장님이 24시간 내로 연락드립니다.
+          {t("contactNote")}
         </p>
         <Link href="/" className="text-teal-600 hover:underline">
-          홈으로 돌아가기
+          {t("backHomeFull")}
         </Link>
       </div>
     </div>
