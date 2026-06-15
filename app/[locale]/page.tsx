@@ -62,6 +62,23 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </Container>
       </section>
 
+      <section className="px-4 py-20 sm:px-6">
+        <Container className="max-w-4xl">
+          <SectionHeading eyebrow={t("stampEyebrow")} title={t("stampTitle")} subtitle={t("stampSubtitle")} />
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {[1, 2, 3].map((n) => (
+              <Card key={n} className="p-6 text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gold-500/15 font-serif text-lg font-bold text-gold-600">
+                  {n}
+                </div>
+                <p className="text-sm leading-relaxed text-stone-600">{t(`stampStep${n}` as "stampStep1")}</p>
+              </Card>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-stone-400">{t("stampForeignNotice")}</p>
+        </Container>
+      </section>
+
       <HospitalMainSection />
 
       {/* Partners */}
