@@ -166,6 +166,11 @@ describe("cancelRedemption", () => {
     ) as { delta: number; reason: string } | undefined;
     expect(refundEvent).toBeDefined();
     expect(refundEvent?.delta).toBe(REDEEM_COST);
+    // $transaction must use Serializable isolation to prevent double-refund
+    expect(currentDb.$transaction).toHaveBeenCalledWith(
+      expect.any(Function),
+      { isolationLevel: "Serializable" }
+    );
   });
 
   it("throws NOT_FOUND when redemption belongs to different user", async () => {
@@ -198,6 +203,11 @@ describe("processRedemption", () => {
     ) as { delta: number; reason: string } | undefined;
     expect(refundEvent).toBeDefined();
     expect(refundEvent?.delta).toBe(REDEEM_COST);
+    // $transaction must use Serializable isolation to prevent double-refund
+    expect(currentDb.$transaction).toHaveBeenCalledWith(
+      expect.any(Function),
+      { isolationLevel: "Serializable" }
+    );
   });
 
   it("(e) fulfill does NOT create a refund stamp event", async () => {
