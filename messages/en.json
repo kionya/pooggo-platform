@@ -1,4 +1,4 @@
-{
+{ "Consult": {"title":"Request a Consultation","name":"Your Name","namePlaceholder":"John Doe","phone":"Phone (required)","content":"Your Message","contentPlaceholder":"What would you like to know?","submit":"Submit Request"},
   "Stamps": { "chipAria": "Stamps {n}/{goal}",
   "title": "PooGGo Stamps",
   "subtitle": "Collect 10 stamps to redeem a complimentary treatment at a benefit clinic.",

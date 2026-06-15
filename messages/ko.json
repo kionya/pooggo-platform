@@ -1,4 +1,4 @@
-{
+{ "Consult": {"title":"상담 신청","name":"고객 이름","namePlaceholder":"홍길동","phone":"연락처 (필수)","content":"상담 내용","contentPlaceholder":"무엇이 궁금하신가요?","submit":"신청서 제출하기"},
   "Stamps": { "chipAria": "스탬프 {n}/{goal}",
   "title": "PooGGo 스탬프",
   "subtitle": "스탬프 10개를 모으면 베네핏 병원에서 무료시술로 교환할 수 있습니다.",
