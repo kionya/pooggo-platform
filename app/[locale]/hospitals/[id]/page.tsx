@@ -35,12 +35,7 @@ export default async function HospitalDetailPage(props: Props) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center">
         <div className="bg-clay-600/10 p-6 rounded-xl border border-clay-600/30 mb-6 max-w-md">
-          <h2 className="text-xl font-bold text-clay-700 mb-2">⚠ {tDetail("notFoundTitle")}</h2>
-          <p className="text-stone-600 mb-4">요청하신 ID가 데이터베이스에 없습니다.</p>
-          <div className="bg-cream p-3 rounded border border-stone-200 text-xs text-left font-mono text-stone-500 break-all">
-            {/* ID가 비어있는지 확인하는 디버깅용 코드 */}
-            <strong>Requested ID:</strong> {hospitalId ? hospitalId : "(ID 감지 실패! await params 확인 필요)"}
-          </div>
+          <h2 className="text-xl font-bold text-clay-700">⚠ {tDetail("notFoundTitle")}</h2>
         </div>
         <Link href="/hospitals" className="bg-gold-500 text-navy-900 px-6 py-3 rounded-xl font-bold hover:bg-gold-600 transition">
           {tDetail("backToList")}
