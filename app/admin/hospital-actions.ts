@@ -79,14 +79,15 @@ export async function updateHospital(id: string, input: HospitalInput): Promise<
 
 export async function deleteHospital(id: string): Promise<{ ok: boolean; error?: string }> {
   await requireRole(["SUPER_ADMIN"]);
-  const active = await db.redemption.count({
-    where: { hospitalId: id, status: { in: ["REQUESTED", "APPROVED"] } },
-  });
-  if (active > 0) {
-    return { ok: false, error: "진행 중인 교환 신청이 있어 삭제할 수 없습니다. 먼저 교환 건을 처리하세요." };
-  }
   try {
     await db.$transaction(async (tx) => {
+      const active = await tx.redemption.count({
+        where: { hospitalId: id, status: { in: ["REQUESTED", "APPROVED"] } },
+      });
+      if (active > 0) {
+        throw new Error("진행 중인 교환 신청이 있어 삭제할 수 없습니다. 먼저 교환 건을 처리하세요.");
+      }
+      await tx.redemption.deleteMany({ where: { hospitalId: id } });
       await tx.menu.deleteMany({ where: { hospitalId: id } });
       await tx.doctor.deleteMany({ where: { hospitalId: id } });
       await tx.review.deleteMany({ where: { hospitalId: id } });
