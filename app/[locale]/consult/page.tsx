@@ -41,7 +41,7 @@ export default function ConsultPage() {
             ></textarea>
           </div>
 
-          <Button type="submit" variant="primary" className="w-full py-3">
+          <Button type="submit" variant="primary" className="w-full">
             신청서 제출하기
           </Button>
         </form>

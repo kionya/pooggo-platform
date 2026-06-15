@@ -46,7 +46,7 @@ export default async function PatientLoginPage({ params, searchParams }: Props) 
             className={inputClass} />
           <input name="password" type="password" placeholder={t("password")} required
             className={inputClass} />
-          <Button type="submit" variant="primary" className="w-full py-3">{t("loginSubmit")}</Button>
+          <Button type="submit" variant="primary" className="w-full">{t("loginSubmit")}</Button>
         </form>
         <p className="text-center text-sm text-stone-400 mt-4">
           <Link href="/account/signup" className="hover:underline hover:text-navy-900">{t("noAccount")}</Link>
