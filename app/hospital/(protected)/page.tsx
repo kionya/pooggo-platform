@@ -28,14 +28,18 @@ export default async function HospitalDashboard() {
           <div className="text-sm text-stone-500">등급</div>
           <div className="text-lg font-bold text-navy-900 mt-2">{TIER_LABEL[hospital.tier] ?? hospital.tier}</div>
         </Card>
-        <Link href="/hospital/bookings?status=NEW" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
-          <div className="text-sm text-stone-500">신규 예약</div>
-          <div className="text-3xl font-bold text-navy-900 mt-2">{newCount}</div>
-        </Link>
-        <Link href="/hospital/bookings" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
-          <div className="text-sm text-stone-500">전체 예약</div>
-          <div className="text-3xl font-bold text-navy-900 mt-2">{totalCount}</div>
-        </Link>
+        <Card className="p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
+          <Link href="/hospital/bookings?status=NEW" className="block">
+            <div className="text-sm text-stone-500">신규 예약</div>
+            <div className="text-3xl font-bold text-navy-900 mt-2">{newCount}</div>
+          </Link>
+        </Card>
+        <Card className="p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
+          <Link href="/hospital/bookings" className="block">
+            <div className="text-sm text-stone-500">전체 예약</div>
+            <div className="text-3xl font-bold text-navy-900 mt-2">{totalCount}</div>
+          </Link>
+        </Card>
       </div>
       <p className="text-sm text-stone-500">
         공개 여부·등급·시술 가격은 플랫폼에서 관리됩니다. 변경이 필요하면 운영팀에 문의하세요.{" "}
