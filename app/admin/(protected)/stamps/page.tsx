@@ -1,7 +1,8 @@
 import { requireRole } from "@/lib/auth/guard";
 import { db } from "@/lib/db";
 import { grantStampsAction } from "@/app/admin/stamp-actions";
-import { inputClass } from "@/components/ui/Field";
+import { Field, inputClass } from "@/components/ui/Field";
+import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 
 export default async function AdminStampsPage() {
@@ -14,18 +15,24 @@ export default async function AdminStampsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-stone-200 bg-cream p-6">
+      <Card className="p-6">
         <h1 className="mb-4 font-serif text-xl font-bold text-navy-900">스탬프 발급 / 보정</h1>
-        <form action={grantStampsAction} className="grid gap-3 sm:grid-cols-[2fr_1fr_2fr_auto]">
-          <input name="email" type="email" placeholder="환자 이메일" className={inputClass} />
-          <input name="delta" type="number" placeholder="수량(+/-)" className={inputClass} />
-          <input name="note" type="text" placeholder="메모(선택)" className={inputClass} />
+        <form action={grantStampsAction} className="grid gap-3 sm:grid-cols-[2fr_1fr_2fr_auto] sm:items-end">
+          <Field label="환자 이메일" htmlFor="stamp-email" required>
+            <input id="stamp-email" name="email" type="email" placeholder="환자 이메일" className={inputClass} />
+          </Field>
+          <Field label="수량(+/-)" htmlFor="stamp-delta" required>
+            <input id="stamp-delta" name="delta" type="number" placeholder="수량(+/-)" className={inputClass} />
+          </Field>
+          <Field label="메모" htmlFor="stamp-note">
+            <input id="stamp-note" name="note" type="text" placeholder="메모(선택)" className={inputClass} />
+          </Field>
           <Button type="submit">발급</Button>
         </form>
         <p className="mt-2 text-xs text-stone-400">양수=적립(ADMIN_GRANT), 음수=보정(ADJUST). ⚠️ 금액·규칙 추후 확정.</p>
-      </div>
+      </Card>
 
-      <div className="rounded-xl border border-stone-200 bg-cream p-6">
+      <Card className="p-6">
         <h2 className="mb-4 font-bold text-navy-900">최근 적립 내역</h2>
         <ul className="space-y-2 text-sm">
           {recent.map((e) => (
@@ -37,7 +44,7 @@ export default async function AdminStampsPage() {
             </li>
           ))}
         </ul>
-      </div>
+      </Card>
     </div>
   );
 }

@@ -1,15 +1,12 @@
 "use server";
 
 import { requireRole } from "@/lib/auth/guard";
-import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { grantStamps, processRedemption } from "@/lib/stamps";
-import type { RedemptionAction } from "@/lib/stamps/redemption";
+import { grantStamps } from "@/lib/stamps";
 import { revalidatePath } from "next/cache";
 
 export async function grantStampsAction(formData: FormData): Promise<{ ok: boolean; errors: string[] }> {
-  await requireRole(["SUPER_ADMIN"]);
-  const session = await auth();
+  const session = await requireRole(["SUPER_ADMIN"]);
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const delta = parseInt(String(formData.get("delta") ?? ""), 10);
   const note = String(formData.get("note") ?? "");
@@ -27,17 +24,5 @@ export async function grantStampsAction(formData: FormData): Promise<{ ok: boole
     note,
   });
   revalidatePath("/admin/stamps");
-  return { ok: true, errors: [] };
-}
-
-export async function processRedemptionAction(id: string, action: RedemptionAction): Promise<{ ok: boolean; errors: string[] }> {
-  await requireRole(["SUPER_ADMIN"]);
-  const session = await auth();
-  try {
-    await processRedemption({ id, action, adminId: session?.user?.id ?? "" });
-  } catch {
-    return { ok: false, errors: ["처리할 수 없는 상태입니다."] };
-  }
-  revalidatePath("/admin/redemptions");
   return { ok: true, errors: [] };
 }
