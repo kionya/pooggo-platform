@@ -5,7 +5,7 @@ import { Star, Ticket } from "lucide-react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getBalance } from "@/lib/stamps";
 import { progress } from "@/lib/stamps/balance";
-import { STAMP_GOAL } from "@/lib/stamps/config";
+import { STAMP_GOAL } from "@/lib/stamps";
 import { Link } from "@/i18n/navigation";
 
 type Props = { params: Promise<{ locale: string }> };
