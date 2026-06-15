@@ -25,7 +25,11 @@ export default async function LocaleLayout({
   const session = await auth();
   let stampBalance: number | null = null;
   if (session?.user?.role === "PATIENT" && session.user.id) {
-    stampBalance = await getBalance(session.user.id);
+    try {
+      stampBalance = await getBalance(session.user.id);
+    } catch {
+      stampBalance = null;
+    }
   }
 
   return (
