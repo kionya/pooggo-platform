@@ -3,6 +3,8 @@ import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { inputClass } from "@/components/ui/Field";
+import { Button } from "@/components/ui/Button";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -41,10 +43,10 @@ export default async function PatientLoginPage({ params, searchParams }: Props) 
         )}
         <form action={doLogin} className="space-y-4">
           <input name="email" type="email" placeholder={t("email")} required autoFocus
-            className="w-full rounded-lg border border-stone-300 bg-cream px-3 py-2.5 text-navy-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600/40" />
+            className={inputClass} />
           <input name="password" type="password" placeholder={t("password")} required
-            className="w-full rounded-lg border border-stone-300 bg-cream px-3 py-2.5 text-navy-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600/40" />
-          <button type="submit" className="w-full bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold py-3 rounded-xl transition-colors">{t("loginSubmit")}</button>
+            className={inputClass} />
+          <Button type="submit" variant="primary" className="w-full py-3">{t("loginSubmit")}</Button>
         </form>
         <p className="text-center text-sm text-stone-400 mt-4">
           <Link href="/account/signup" className="hover:underline hover:text-navy-900">{t("noAccount")}</Link>

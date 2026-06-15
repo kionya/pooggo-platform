@@ -1,4 +1,6 @@
 import { createConsultation } from "@/app/actions";
+import { inputClass } from "@/components/ui/Field";
+import { Button } from "@/components/ui/Button";
 
 export default function ConsultPage() {
   return (
@@ -14,7 +16,7 @@ export default function ConsultPage() {
               name="customerName"
               type="text"
               placeholder="홍길동"
-              className="w-full rounded-lg border border-stone-300 bg-cream px-3 py-2.5 text-navy-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600/40"
+              className={inputClass}
             />
           </div>
 
@@ -25,7 +27,7 @@ export default function ConsultPage() {
               type="text"
               placeholder="010-1234-5678"
               required
-              className="w-full rounded-lg border border-stone-300 bg-cream px-3 py-2.5 text-navy-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600/40"
+              className={inputClass}
             />
           </div>
 
@@ -35,16 +37,13 @@ export default function ConsultPage() {
               name="content"
               placeholder="무엇이 궁금하신가요?"
               required
-              className="w-full rounded-lg border border-stone-300 bg-cream px-3 py-2.5 text-navy-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-600/40 h-24"
+              className={`${inputClass} h-24`}
             ></textarea>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-gold-500 text-navy-900 font-bold py-3 rounded-xl hover:bg-gold-600 transition-colors"
-          >
+          <Button type="submit" variant="primary" className="w-full py-3">
             신청서 제출하기
-          </button>
+          </Button>
         </form>
       </div>
     </div>
