@@ -83,7 +83,7 @@ export async function getHospitalById(id: string) {
 export async function addReview(formData: FormData): Promise<{ ok: boolean; errors: string[] }> {
   const session = await auth();
   if (!canWriteReview(session?.user?.role)) {
-    return { ok: false, errors: ["로그인이 필요합니다."] };
+    return { ok: false, errors: ["LOGIN_REQUIRED"] };
   }
 
   const hospitalId = String(formData.get("hospitalId") || "");
@@ -102,7 +102,7 @@ export async function addReview(formData: FormData): Promise<{ ok: boolean; erro
     revalidatePath(`/hospitals/${hospitalId}`);
   } catch (error) {
     console.error("리뷰 작성 실패:", error);
-    return { ok: false, errors: ["후기 등록에 실패했습니다."] };
+    return { ok: false, errors: ["REVIEW_SUBMIT_FAILED"] };
   }
   return { ok: true, errors: [] };
 }
@@ -110,7 +110,7 @@ export async function addReview(formData: FormData): Promise<{ ok: boolean; erro
 // 5. 후기 신고하기 (로그인 필수, 1인 1신고)
 export async function reportReview(formData: FormData): Promise<{ ok: boolean; errors: string[] }> {
   const session = await auth();
-  if (!canReport(session?.user?.role)) return { ok: false, errors: ["로그인이 필요합니다."] };
+  if (!canReport(session?.user?.role)) return { ok: false, errors: ["LOGIN_REQUIRED"] };
 
   const reviewId = String(formData.get("reviewId") || "");
   const reason = String(formData.get("reason") || "");
@@ -118,13 +118,13 @@ export async function reportReview(formData: FormData): Promise<{ ok: boolean; e
   if (errors.length) return { ok: false, errors };
 
   const review = await db.review.findUnique({ where: { id: reviewId } });
-  if (!review) return { ok: false, errors: ["후기를 찾을 수 없습니다."] };
-  if (review.authorUserId === session!.user.id) return { ok: false, errors: ["본인 후기는 신고할 수 없습니다."] };
+  if (!review) return { ok: false, errors: ["REVIEW_NOT_FOUND"] };
+  if (review.authorUserId === session!.user.id) return { ok: false, errors: ["CANNOT_REPORT_OWN"] };
 
   try {
     await db.report.create({ data: { reviewId, reporterUserId: session!.user.id, reason: reason.trim() || null } });
   } catch {
-    return { ok: false, errors: ["이미 신고한 후기입니다."] };
+    return { ok: false, errors: ["ALREADY_REPORTED"] };
   }
   return { ok: true, errors: [] };
 }

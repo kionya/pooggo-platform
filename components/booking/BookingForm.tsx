@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function BookingForm({ hospitalIds, hospitalNames }: { hospitalIds: string[]; hospitalNames: string[] }) {
   const t = useTranslations("Booking");
+  const tErr = useTranslations("Errors");
   const locale = useLocale();
   const [errors, setErrors] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
@@ -30,7 +31,7 @@ export default function BookingForm({ hospitalIds, hospitalNames }: { hospitalId
       <div className="text-sm text-stone-600">{t("forHospitals")}: <b className="text-navy-900">{hospitalNames.join(", ")}</b></div>
       {errors.length > 0 && (
         <div className="bg-clay-600/10 border border-clay-600/30 text-clay-700 p-3 rounded-lg text-sm">
-          {errors.map((er, i) => <div key={i}>• {er}</div>)}
+          {errors.map((er, i) => <div key={i}>• {tErr(er)}</div>)}
         </div>
       )}
       <div className="grid grid-cols-2 gap-3">

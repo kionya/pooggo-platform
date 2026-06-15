@@ -5,12 +5,13 @@ export type PatientSignupInput = {
   name: string;
 };
 
+// 에러 코드 반환(messages의 Errors 네임스페이스로 클라이언트에서 번역).
 export function validatePatientSignup(input: PatientSignupInput): string[] {
   const errors: string[] = [];
   const email = input.email.trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("email: 올바른 이메일을 입력하세요.");
-  if (input.password.length < 8) errors.push("password: 비밀번호는 8자 이상이어야 합니다.");
-  if (input.password !== input.passwordConfirm) errors.push("passwordConfirm: 비밀번호가 일치하지 않습니다.");
-  if (!input.name.trim()) errors.push("name: 이름은 필수입니다.");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("INVALID_EMAIL");
+  if (input.password.length < 8) errors.push("PASSWORD_MIN");
+  if (input.password !== input.passwordConfirm) errors.push("PASSWORD_MISMATCH");
+  if (!input.name.trim()) errors.push("REQUIRED_NAME");
   return errors;
 }

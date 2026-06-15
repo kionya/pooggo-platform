@@ -1,18 +1,19 @@
 import { TIME_OF_DAY } from "./types";
 import type { BookingInput } from "./types";
 
+// 에러 코드 반환(messages의 Errors 네임스페이스로 클라이언트에서 번역).
 export function validateBookingInput(input: BookingInput): string[] {
   const errors: string[] = [];
-  if (input.hospitalIds.length < 1) errors.push("hospital: 병원을 1곳 이상 선택해야 합니다.");
-  if (input.hospitalIds.length > 3) errors.push("hospital: 병원은 최대 3곳까지 가능합니다.");
-  if (!input.name.trim()) errors.push("name: 이름은 필수입니다.");
-  if (!input.phone.trim()) errors.push("phone: 연락처는 필수입니다.");
-  if (!input.nationality.trim()) errors.push("nationality: 국적은 필수입니다.");
-  if (!input.preferredDate1.trim()) errors.push("preferredDate1: 1지망 날짜는 필수입니다.");
-  if (input.preferredDate1.trim() && Number.isNaN(new Date(input.preferredDate1).getTime())) errors.push("preferredDate1: 날짜 형식이 올바르지 않습니다.");
-  if (input.preferredDate2.trim() && Number.isNaN(new Date(input.preferredDate2).getTime())) errors.push("preferredDate2: 날짜 형식이 올바르지 않습니다.");
-  if (!(TIME_OF_DAY as readonly string[]).includes(input.timeOfDay)) errors.push("timeOfDay: 시간대가 올바르지 않습니다.");
-  if (!input.consent) errors.push("consent: 개인정보 수집·이용에 동의해야 합니다.");
-  if (input.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email.trim())) errors.push("email: 이메일 형식이 올바르지 않습니다.");
+  if (input.hospitalIds.length < 1) errors.push("BOOKING_HOSPITAL_MIN");
+  if (input.hospitalIds.length > 3) errors.push("BOOKING_HOSPITAL_MAX");
+  if (!input.name.trim()) errors.push("REQUIRED_NAME");
+  if (!input.phone.trim()) errors.push("REQUIRED_PHONE");
+  if (!input.nationality.trim()) errors.push("REQUIRED_NATIONALITY");
+  if (!input.preferredDate1.trim()) errors.push("REQUIRED_DATE1");
+  if (input.preferredDate1.trim() && Number.isNaN(new Date(input.preferredDate1).getTime())) errors.push("INVALID_DATE1");
+  if (input.preferredDate2.trim() && Number.isNaN(new Date(input.preferredDate2).getTime())) errors.push("INVALID_DATE2");
+  if (!(TIME_OF_DAY as readonly string[]).includes(input.timeOfDay)) errors.push("INVALID_TIMEOFDAY");
+  if (!input.consent) errors.push("REQUIRED_CONSENT");
+  if (input.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email.trim())) errors.push("INVALID_EMAIL");
   return errors;
 }

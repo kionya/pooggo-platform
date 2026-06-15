@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function ReviewForm({ hospitalId }: { hospitalId: string }) {
   const t = useTranslations("Detail");
+  const tErr = useTranslations("Errors");
   const router = useRouter();
   const [errors, setErrors] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
@@ -34,7 +35,7 @@ export default function ReviewForm({ hospitalId }: { hospitalId: string }) {
     <form onSubmit={onSubmit} className="mt-4 space-y-3">
       {errors.length > 0 && (
         <div className="bg-clay-600/10 border border-clay-600/30 text-clay-700 p-3 rounded-lg text-sm">
-          {errors.map((er, i) => <div key={i}>• {er}</div>)}
+          {errors.map((er, i) => <div key={i}>• {tErr(er)}</div>)}
         </div>
       )}
       <select value={rating} onChange={(e) => setRating(Number(e.target.value))} className={`${inputClass} w-auto text-sm`}>

@@ -30,7 +30,7 @@ export async function registerPatient(formData: FormData): Promise<{ ok: boolean
 
   const email = input.email.trim().toLowerCase();
   const existing = await db.user.findUnique({ where: { email } });
-  if (existing) return { ok: false, errors: ["email: 이미 가입된 이메일입니다."] };
+  if (existing) return { ok: false, errors: ["EMAIL_TAKEN"] };
 
   const passwordHash = await hashPassword(input.password);
   const token = generateVerifyToken();
@@ -43,7 +43,7 @@ export async function registerPatient(formData: FormData): Promise<{ ok: boolean
       },
     });
   } catch (e: any) {
-    return { ok: false, errors: ["가입 실패: " + String(e?.message || e)] };
+    return { ok: false, errors: ["SIGNUP_FAILED"] };
   }
 
   // 인증 메일 발송(키 미설정 시 콘솔 폴백)
