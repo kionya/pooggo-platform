@@ -5,8 +5,10 @@ import AccountNav from "@/components/AccountNav";
 import { Logo } from "@/components/ui/Logo";
 import { StampChip } from "./StampChip";
 
+// TODO: fetch stamp balance — pass stampBalance prop from app/[locale]/layout.tsx once
+// auth() + balance query are wired up in phase 6b. Until then, StampChip stays hidden.
 export async function SiteHeader({ stampBalance }: { stampBalance?: number | null }) {
-  const t = await getTranslations("Home");
+  const t = await getTranslations("Nav");
   return (
     <header className="sticky top-0 z-40 w-full border-b border-stone-200 bg-ivory/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -21,7 +23,7 @@ export async function SiteHeader({ stampBalance }: { stampBalance?: number | nul
           <AccountNav />
           <Link
             href="/booking"
-            className="rounded-full bg-navy-900 px-5 py-2 text-sm font-bold text-cream transition-colors hover:bg-navy-700"
+            className="rounded-full bg-navy-900 px-5 py-2 text-sm font-bold text-cream transition-colors hover:bg-navy-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
           >
             {t("bookConsultation")}
           </Link>

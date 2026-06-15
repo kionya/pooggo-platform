@@ -22,6 +22,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider>
       <div className="flex min-h-screen flex-col bg-ivory">
+        {/* TODO: fetch stamp balance via auth() + getBalance() in phase 6b, then pass stampBalance={balance} */}
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
