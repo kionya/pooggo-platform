@@ -16,7 +16,7 @@ export function canRedeem(balance: number, cost: number = REDEEM_COST): boolean 
 
 export type RedemptionAction = "approve" | "reject" | "fulfill" | "cancel";
 
-const NEXT: Record<string, Partial<Record<RedemptionAction, RedemptionStatus>>> = {
+const NEXT: Record<RedemptionStatus, Partial<Record<RedemptionAction, RedemptionStatus>>> = {
   REQUESTED: { approve: "APPROVED", reject: "REJECTED", cancel: "CANCELLED" },
   APPROVED: { fulfill: "FULFILLED", reject: "REJECTED", cancel: "CANCELLED" },
   FULFILLED: {},
@@ -24,11 +24,11 @@ const NEXT: Record<string, Partial<Record<RedemptionAction, RedemptionStatus>>> 
   CANCELLED: {},
 };
 
-export function nextRedemptionStatus(from: string, action: RedemptionAction): RedemptionStatus | null {
+export function nextRedemptionStatus(from: RedemptionStatus, action: RedemptionAction): RedemptionStatus | null {
   return NEXT[from]?.[action] ?? null;
 }
 
 // 종단 진입 시 차감했던 스탬프를 환급해야 하는 상태
-export function isRefundExit(status: string): boolean {
+export function isRefundExit(status: RedemptionStatus): boolean {
   return status === "REJECTED" || status === "CANCELLED";
 }
