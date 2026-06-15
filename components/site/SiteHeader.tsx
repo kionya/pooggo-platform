@@ -5,8 +5,6 @@ import AccountNav from "@/components/AccountNav";
 import { Logo } from "@/components/ui/Logo";
 import { StampChip } from "./StampChip";
 
-// TODO: fetch stamp balance — pass stampBalance prop from app/[locale]/layout.tsx once
-// auth() + balance query are wired up in phase 6b. Until then, StampChip stays hidden.
 export async function SiteHeader({ stampBalance }: { stampBalance?: number | null }) {
   const t = await getTranslations("Nav");
   return (
