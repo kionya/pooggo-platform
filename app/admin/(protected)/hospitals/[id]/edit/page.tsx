@@ -26,7 +26,7 @@ export default async function EditHospitalPage({ params }: { params: Promise<{ i
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">병원 수정</h1>
+      <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6">병원 수정</h1>
       <HospitalForm mode="edit" hospitalId={h.id} initial={initial} />
     </div>
   );

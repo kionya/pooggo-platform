@@ -20,12 +20,12 @@ export default async function AdminDashboard() {
   ];
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">대시보드</h1>
+      <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6">대시보드</h1>
       <div className="grid grid-cols-3 gap-4">
         {cards.map((c) => (
-          <Link key={c.label} href={c.href} className="bg-white p-6 rounded-xl border hover:shadow-md transition">
-            <div className="text-sm text-gray-500">{c.label}</div>
-            <div className="text-3xl font-bold mt-2">{c.value}</div>
+          <Link key={c.label} href={c.href} className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-float)] transition-shadow">
+            <div className="text-sm text-stone-500">{c.label}</div>
+            <div className="text-3xl font-bold text-navy-900 mt-2">{c.value}</div>
           </Link>
         ))}
       </div>
