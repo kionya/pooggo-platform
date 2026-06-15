@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { REDEEM_COST, type RedemptionStatus } from "./config";
+import { REDEEM_COST, type StampReason, type RedemptionStatus } from "./config";
 import { generateRedemptionCode, isRefundExit, nextRedemptionStatus, type RedemptionAction } from "./redemption";
 
 export { STAMP_GOAL, REDEEM_COST } from "./config";
@@ -16,7 +16,7 @@ export function getHistory(userId: string) {
 export async function grantStamps(params: {
   userId: string;
   delta: number;
-  reason: string;
+  reason: StampReason;
   sourceType?: string;
   sourceId?: string;
   adminId?: string;
@@ -67,7 +67,7 @@ export async function requestRedemption(params: { userId: string; hospitalId: st
       },
     });
     return redemption;
-  });
+  }, { isolationLevel: "Serializable" });
 }
 
 // 사용자 취소: REQUESTED/APPROVED → CANCELLED + 환급
@@ -78,16 +78,18 @@ export async function cancelRedemption(params: { id: string; userId: string }) {
     const to = nextRedemptionStatus(r.status as RedemptionStatus, "cancel");
     if (!to) throw new Error("INVALID_TRANSITION");
     await tx.redemption.update({ where: { id: r.id }, data: { status: to } });
-    await tx.stampEvent.create({
-      data: {
-        userId: r.userId,
-        delta: r.stampCost,
-        reason: "REFUND",
-        sourceType: "Redemption",
-        sourceId: r.id,
-        redemptionId: r.id,
-      },
-    });
+    if (isRefundExit(to)) {
+      await tx.stampEvent.create({
+        data: {
+          userId: r.userId,
+          delta: r.stampCost,
+          reason: "REFUND",
+          sourceType: "Redemption",
+          sourceId: r.id,
+          redemptionId: r.id,
+        },
+      });
+    }
     return to;
   });
 }
