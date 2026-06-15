@@ -1,8 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import { Ticket } from "lucide-react";
+import { STAMP_GOAL } from "@/lib/stamps/config";
 
 // balance가 null/undefined(비로그인 또는 미주입)면 렌더하지 않는다.
-export function StampChip({ balance, goal = 10 }: { balance?: number | null; goal?: number }) {
+export function StampChip({ balance, goal = STAMP_GOAL }: { balance?: number | null; goal?: number }) {
   if (balance === null || balance === undefined) return null;
   return (
     <Link
