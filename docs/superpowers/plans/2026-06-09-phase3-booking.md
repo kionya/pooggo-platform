@@ -1,4 +1,4 @@
-# RICH DOC Phase 3 — 예약 + 알림 Implementation Plan
+# PooGGo Phase 3 — 예약 + 알림 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 App Router, React 19, Prisma + Neon Postgres, next-intl, @vercel/blob, Resend API(fetch), Telegram Bot API(fetch), vitest.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-09-richdoc-phase3-booking-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-09-pooggo-phase3-booking-design.md`
 
 > **순서:** 순수 도메인(Task 1–4) → 어댑터(Task 5 Blob, 6 알림) → 스키마(7) → 폼·생성(8) → 성공(9) → 관리자(10) → 진입점 배선(11) → 검증(12). 각 태스크는 `npm run build` 통과 상태로 끝낸다.
 
@@ -441,7 +441,7 @@ function lines(b: BookingLike, hospitalName: string): string[] {
 export function patientEmail(b: BookingLike, hospitalName: string): { subject: string; html: string } {
   const body = lines(b, hospitalName).map((l) => `<p>${l}</p>`).join("");
   return {
-    subject: `[RICH DOC] Booking received — ${b.code}`,
+    subject: `[PooGGo] Booking received — ${b.code}`,
     html: `<h2>Your booking request was received</h2><p>This is a request; the clinic will confirm the schedule.</p>${body}`,
   };
 }
@@ -453,7 +453,7 @@ export function adminMessage(b: BookingLike, hospitalName: string): string {
 export function hospitalEmail(b: BookingLike, hospitalName: string): { subject: string; html: string } {
   const body = lines(b, hospitalName).map((l) => `<p>${l}</p>`).join("");
   return {
-    subject: `[RICH DOC] New patient booking — ${hospitalName}`,
+    subject: `[PooGGo] New patient booking — ${hospitalName}`,
     html: `<h2>New booking request</h2>${body}`,
   };
 }

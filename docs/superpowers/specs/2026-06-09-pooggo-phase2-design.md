@@ -1,4 +1,4 @@
-# RICH DOC Global Hub — Phase 2 설계서 (발견 + 다국어)
+# PooGGo Global Hub — Phase 2 설계서 (발견 + 다국어)
 
 작성일: 2026-06-09
 대상: 외국인환자 허브의 환자측 발견 경험 완성 + 실제 다국어(URL 로케일)

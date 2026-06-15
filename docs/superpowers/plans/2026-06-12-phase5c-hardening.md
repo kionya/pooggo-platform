@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16(App Router) · NextAuth(Auth.js v5) · Prisma(PostgreSQL/Neon) · next-intl(ko/en/zh/ja) · Resend(fetch) · vitest · Tailwind.
 
-**스펙:** `docs/superpowers/specs/2026-06-12-richdoc-phase5c-hardening-design.md`
+**스펙:** `docs/superpowers/specs/2026-06-12-pooggo-phase5c-hardening-design.md`
 **자문:** `docs/compliance/2026-06-12-medical-ad-prereview-analysis.md`
 
 ---
@@ -224,10 +224,10 @@ import { describe, it, expect } from "vitest";
 import { verificationEmail } from "./templates";
 
 describe("verificationEmail", () => {
-  const link = "https://richdoc.example/ko/account/verify?token=abc123";
+  const link = "https://pooggo.example/ko/account/verify?token=abc123";
   it("제목에 브랜드, 본문에 링크 포함", () => {
     const r = verificationEmail(link, "ko");
-    expect(r.subject).toContain("RICH DOC");
+    expect(r.subject).toContain("PooGGo");
     expect(r.html).toContain(link);
   });
   it("로케일별 제목 다름", () => {
@@ -254,10 +254,10 @@ Expected: FAIL (verificationEmail 없음).
 
 ```typescript
 const VERIFY_I18N: Record<string, { subject: string; heading: string; body: string; cta: string }> = {
-  ko: { subject: "[RICH DOC] 이메일 인증", heading: "이메일 인증을 완료해주세요", body: "아래 버튼을 눌러 가입을 완료하세요. 링크는 24시간 후 만료됩니다.", cta: "이메일 인증하기" },
-  en: { subject: "[RICH DOC] Verify your email", heading: "Verify your email", body: "Click the button below to complete signup. This link expires in 24 hours.", cta: "Verify email" },
-  zh: { subject: "[RICH DOC] 邮箱验证", heading: "请完成邮箱验证", body: "请点击下方按钮完成注册。链接将在24小时后失效。", cta: "验证邮箱" },
-  ja: { subject: "[RICH DOC] メール認証", heading: "メール認証を完了してください", body: "下のボタンを押して登録を完了してください。リンクは24時間後に失効します。", cta: "メールを認証する" },
+  ko: { subject: "[PooGGo] 이메일 인증", heading: "이메일 인증을 완료해주세요", body: "아래 버튼을 눌러 가입을 완료하세요. 링크는 24시간 후 만료됩니다.", cta: "이메일 인증하기" },
+  en: { subject: "[PooGGo] Verify your email", heading: "Verify your email", body: "Click the button below to complete signup. This link expires in 24 hours.", cta: "Verify email" },
+  zh: { subject: "[PooGGo] 邮箱验证", heading: "请完成邮箱验证", body: "请点击下方按钮完成注册。链接将在24小时后失效。", cta: "验证邮箱" },
+  ja: { subject: "[PooGGo] メール認証", heading: "メール認証を完了してください", body: "下のボタンを押して登録を完了してください。リンクは24時間後に失効します。", cta: "メールを認証する" },
 };
 
 export function verificationEmail(link: string, locale: string): { subject: string; html: string } {

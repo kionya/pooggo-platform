@@ -1,4 +1,4 @@
-# RICH DOC Phase 2 — 발견 + 다국어 Implementation Plan
+# PooGGo Phase 2 — 발견 + 다국어 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 App Router, React 19, next-intl, Prisma + Neon Postgres, Tailwind 4, vitest.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-09-richdoc-phase2-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-09-pooggo-phase2-design.md`
 
 > **순서 원칙:** i18n 토대(Task 1–2) → 등급 데이터(3–4) → 발견 기능(5–8) → 검증(9). 각 태스크는 `npm run build` 통과 상태로 끝낸다.
 
@@ -873,12 +873,12 @@ describe("buildMessengerLinks", () => {
     expect(r[0]).toMatchObject({ kind: "link", channel: "whatsapp", url: "https://wa.me/821012345678" });
   });
   it("wechat은 복사 타입", () => {
-    const r = buildMessengerLinks({ wechat: "richdoc_kr" });
-    expect(r[0]).toMatchObject({ kind: "copy", channel: "wechat", value: "richdoc_kr" });
+    const r = buildMessengerLinks({ wechat: "pooggo_kr" });
+    expect(r[0]).toMatchObject({ kind: "copy", channel: "wechat", value: "pooggo_kr" });
   });
   it("messenger m.me 접두 제거", () => {
-    const r = buildMessengerLinks({ messenger: "https://m.me/richdoc" });
-    expect(r[0].url).toBe("https://m.me/richdoc");
+    const r = buildMessengerLinks({ messenger: "https://m.me/pooggo" });
+    expect(r[0].url).toBe("https://m.me/pooggo");
   });
   it("phone/email 스킴", () => {
     const r = buildMessengerLinks({ phone: "+8210", email: "a@b.com" });

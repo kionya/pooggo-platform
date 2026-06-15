@@ -23,7 +23,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="w-6 h-6 text-blue-600" />
-            <div className="text-2xl font-bold text-blue-900 tracking-tight">RICH DOC <span className="text-xs text-blue-500 font-normal">GLOBAL</span></div>
+            <div className="text-2xl font-bold text-blue-900 tracking-tight">PooGGo <span className="text-xs text-blue-500 font-normal">GLOBAL</span></div>
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex"><LocaleSwitcher /></div>
@@ -84,7 +84,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <footer className="bg-white border-t border-gray-200 py-12 px-4 text-sm text-gray-600">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-8">
           <div>
-            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">RICH DOC <Globe className="w-4 h-4 text-blue-500"/></h3>
+            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">PooGGo <Globe className="w-4 h-4 text-blue-500"/></h3>
             <p className="mb-2">{f("address")}</p>
             <p>{f("regNo")}</p>
             <p className="mt-1 text-xs text-gray-400">{f("agencyNotice")}</p>
