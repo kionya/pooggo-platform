@@ -23,16 +23,18 @@ export default async function BookingPage({
   if (ordered.length === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-        <p className="text-gray-400 mb-6">{t("forHospitals")}: -</p>
-        <Link href="/hospitals" className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold">{t("backHome")}</Link>
+        <p className="text-stone-400 mb-6">{t("forHospitals")}: -</p>
+        <Link href="/hospitals" className="bg-gold-500 text-navy-900 px-6 py-3 rounded-xl font-bold hover:bg-gold-600 transition-colors">{t("backHome")}</Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
-      <BookingForm hospitalIds={ordered.map((h) => h.id)} hospitalNames={ordered.map((h) => resolveText(h.name, locale))} />
+    <div className="bg-ivory min-h-screen py-10">
+      <div className="max-w-2xl mx-auto px-4">
+        <h1 className="font-serif text-3xl font-bold text-navy-900 mb-6">{t("title")}</h1>
+        <BookingForm hospitalIds={ordered.map((h) => h.id)} hospitalNames={ordered.map((h) => resolveText(h.name, locale))} />
+      </div>
     </div>
   );
 }

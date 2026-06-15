@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { addReview } from "@/app/actions";
+import { inputClass } from "@/components/ui/Field";
+import { Button } from "@/components/ui/Button";
 
 export default function ReviewForm({ hospitalId }: { hospitalId: string }) {
   const t = useTranslations("Detail");
@@ -31,17 +33,17 @@ export default function ReviewForm({ hospitalId }: { hospitalId: string }) {
   return (
     <form onSubmit={onSubmit} className="mt-4 space-y-3">
       {errors.length > 0 && (
-        <div className="bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm">
+        <div className="bg-clay-600/10 border border-clay-600/30 text-clay-700 p-3 rounded-lg text-sm">
           {errors.map((er, i) => <div key={i}>• {er}</div>)}
         </div>
       )}
-      <select value={rating} onChange={(e) => setRating(Number(e.target.value))} className="border p-2 rounded-lg text-sm">
+      <select value={rating} onChange={(e) => setRating(Number(e.target.value))} className={`${inputClass} w-auto text-sm`}>
         {[5, 4, 3, 2, 1].map((n) => <option key={n} value={n}>{"★".repeat(n)}</option>)}
       </select>
-      <textarea name="content" placeholder={t("reviewContent")} required rows={3} className="w-full border p-3 rounded-lg text-sm" />
-      <button type="submit" disabled={saving} className="bg-blue-600 text-white font-bold px-5 py-2 rounded-lg text-sm disabled:opacity-50">
+      <textarea name="content" placeholder={t("reviewContent")} required rows={3} className={`${inputClass} text-sm`} />
+      <Button type="submit" disabled={saving} size="sm">
         {t("reviewSubmit")}
-      </button>
+      </Button>
     </form>
   );
 }

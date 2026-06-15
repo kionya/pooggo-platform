@@ -10,16 +10,16 @@ export default async function VerifySentPage({ params, searchParams }: Props) {
   const t = await getTranslations("Account");
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-3">{t("verifySentTitle")}</h1>
-        <p className="text-gray-500 text-sm mb-2">{t("verifySentBody")}</p>
-        {email && <p className="text-gray-700 text-sm font-medium mb-4">{email}</p>}
-        {resent && <p className="text-green-600 text-sm mb-4">{t("resendDone")}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-ivory p-4">
+      <div className="bg-cream p-8 rounded-2xl border border-stone-200 shadow-[var(--shadow-card)] w-full max-w-md text-center">
+        <h1 className="font-serif text-2xl font-bold text-navy-900 mb-3">{t("verifySentTitle")}</h1>
+        <p className="text-stone-500 text-sm mb-2">{t("verifySentBody")}</p>
+        {email && <p className="text-navy-900 text-sm font-medium mb-4">{email}</p>}
+        {resent && <p className="text-teal-600 text-sm mb-4">{t("resendDone")}</p>}
         <form action={resendVerification} className="mt-4">
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="email" value={email ?? ""} />
-          <button className="text-sm text-blue-600 hover:underline">{t("resend")}</button>
+          <button className="text-sm text-teal-600 hover:underline hover:text-teal-700">{t("resend")}</button>
         </form>
       </div>
     </div>

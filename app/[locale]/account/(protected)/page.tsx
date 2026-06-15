@@ -21,29 +21,29 @@ export default async function AccountHome({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-        <div className="text-lg font-bold text-gray-900">{session.user.name || t("myAccount")}</div>
-        <div className="text-sm text-gray-500">{session.user.email}</div>
+      <div className="bg-cream rounded-2xl border border-stone-200 shadow-[var(--shadow-card)] p-6">
+        <div className="text-lg font-bold text-navy-900">{session.user.name || t("myAccount")}</div>
+        <div className="text-sm text-stone-500">{session.user.email}</div>
       </div>
 
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-        <h2 className="font-bold text-lg mb-4">{t("myReviews")}</h2>
+      <div className="bg-cream rounded-2xl border border-stone-200 shadow-[var(--shadow-card)] p-6">
+        <h2 className="font-serif font-bold text-lg text-navy-900 mb-4">{t("myReviews")}</h2>
         {reviews.length === 0 ? (
-          <p className="text-gray-400 text-sm py-4 text-center">{t("noReviews")}</p>
+          <p className="text-stone-400 text-sm py-4 text-center">{t("noReviews")}</p>
         ) : (
           <ul className="space-y-4">
             {reviews.map((r) => (
-              <li key={r.id} className="border-b border-gray-50 pb-4 last:border-0">
+              <li key={r.id} className="border-b border-stone-100 pb-4 last:border-0">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-800">
+                  <span className="font-medium text-navy-900">
                     {resolveText(r.hospital.name, locale)}
-                    {r.isHidden && <span className="ml-2 text-xs text-red-500">({tDetail("reviewHidden")})</span>}
+                    {r.isHidden && <span className="ml-2 text-xs text-clay-600">({tDetail("reviewHidden")})</span>}
                   </span>
                   <span className="flex items-center text-yellow-500 text-sm font-bold">
                     <Star className="w-4 h-4 fill-current mr-1" /> {r.rating}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 mt-1 whitespace-pre-line">{r.content}</p>
+                <p className="text-sm text-stone-600 mt-1 whitespace-pre-line">{r.content}</p>
               </li>
             ))}
           </ul>
