@@ -28,14 +28,14 @@ export default async function HospitalDashboard() {
           <div className="text-sm text-stone-500">등급</div>
           <div className="text-lg font-bold text-navy-900 mt-2">{TIER_LABEL[hospital.tier] ?? hospital.tier}</div>
         </Card>
-        <Card className="p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
-          <Link href="/hospital/bookings?status=NEW" className="block">
+        <Card className="hover:shadow-[var(--shadow-float)] transition-shadow">
+          <Link href="/hospital/bookings?status=NEW" className="block p-5">
             <div className="text-sm text-stone-500">신규 예약</div>
             <div className="text-3xl font-bold text-navy-900 mt-2">{newCount}</div>
           </Link>
         </Card>
-        <Card className="p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
-          <Link href="/hospital/bookings" className="block">
+        <Card className="hover:shadow-[var(--shadow-float)] transition-shadow">
+          <Link href="/hospital/bookings" className="block p-5">
             <div className="text-sm text-stone-500">전체 예약</div>
             <div className="text-3xl font-bold text-navy-900 mt-2">{totalCount}</div>
           </Link>
