@@ -1,4 +1,5 @@
-import HospitalForm, { emptyHospitalInput } from "@/components/admin/HospitalForm";
+import HospitalForm from "@/components/admin/HospitalForm";
+import { emptyHospitalInput } from "@/lib/hospital/empty";
 
 export default function NewHospitalPage() {
   return (
