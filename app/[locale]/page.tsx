@@ -22,7 +22,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden px-4 pb-24 pt-20 sm:px-6">
+      <section className="relative overflow-hidden pb-24 pt-20">
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-cream to-ivory" />
         <Container className="max-w-4xl text-center">
           <span className="mb-8 inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-gold-500/10 px-4 py-1.5 text-sm font-bold text-gold-600">
@@ -45,7 +45,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       {/* Concierge process */}
-      <section id="process" className="px-4 py-20 sm:px-6">
+      <section id="process" className="py-20">
         <Container>
           <SectionHeading title={t("conciergeTitle")} subtitle={t("conciergeSubtitle")} />
           <div className="mt-14 grid gap-6 md:grid-cols-4">
@@ -65,7 +65,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <HospitalMainSection />
 
       {/* Partners */}
-      <section className="bg-navy-900 px-4 py-16 text-center text-cream sm:px-6">
+      <section className="bg-navy-900 py-16 text-center text-cream">
         <Container className="max-w-5xl">
           <h2 className="font-serif text-2xl font-bold">{t("partnersTitle")}</h2>
           <p className="mt-4 text-sm text-stone-300">{t("partnersNote")}</p>
