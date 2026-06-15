@@ -1,5 +1,5 @@
 import { getHospitalById } from "@/app/actions";
-import { Star, User, DollarSign, MapPin, ArrowLeft, MessageSquare } from "lucide-react";
+import { Star, User, DollarSign, MapPin, ArrowLeft, MessageSquare, Ticket } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { resolveText } from "@/lib/i18n/text";
 import { setRequestLocale, getTranslations } from "next-intl/server";
@@ -141,6 +141,11 @@ export default async function HospitalDetailPage(props: Props) {
           <div className="bg-gold-500/10 border border-gold-500/30 rounded-xl p-6 mb-4">
             <h3 className="font-bold text-lg mb-2 text-gold-600">★ {tTier("benefitsTitle")}</h3>
             <p className="text-navy-900 text-sm whitespace-pre-line">{resolveText(hospital.benefits, locale)}</p>
+            {hospital.tier === "BENEFIT" && (
+              <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-gold-500/10 px-3 py-1.5 text-sm font-bold text-gold-600">
+                <Ticket className="h-4 w-4" /> {tDetail("stampRedeemable")}
+              </div>
+            )}
           </div>
         )}
 
