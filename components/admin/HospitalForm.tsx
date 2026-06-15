@@ -13,25 +13,6 @@ import { inputClass } from "@/components/ui/Field";
 const DAYS: (keyof Omit<OperatingHours, "note">)[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const DAY_LABEL: Record<string, string> = { mon: "월", tue: "화", wed: "수", thu: "목", fri: "금", sat: "토", sun: "일" };
 
-function emptyHours(): OperatingHours {
-  const d = () => ({ open: "10:00", close: "19:00", closed: false });
-  return { mon: d(), tue: d(), wed: d(), thu: d(), fri: d(), sat: d(), sun: { open: "", close: "", closed: true }, note: { ...EMPTY_I18N } };
-}
-function emptyMessengers(): Messengers {
-  return { whatsapp: "", line: "", wechat: "", kakao: "", messenger: "", phone: "", email: "" };
-}
-export function emptyHospitalInput(): HospitalInput {
-  return {
-    slug: "", name: { ...EMPTY_I18N }, intro: { ...EMPTY_I18N }, about: { ...EMPTY_I18N },
-    address: { ...EMPTY_I18N }, cautions: { ...EMPTY_I18N },
-    city: "Seoul", district: "", category: "PLASTIC", tags: "",
-    image: "", images: [], operatingHours: emptyHours(), messengers: emptyMessengers(),
-    isPublished: false,
-    tier: "RECOMMENDED", benefits: { ...EMPTY_I18N },
-    doctors: [], menus: [],
-  };
-}
-
 export default function HospitalForm({
   mode, hospitalId, initial, scope = "admin",
 }: {
