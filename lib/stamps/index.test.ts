@@ -86,7 +86,7 @@ function makeDb(txOverrides: Parameters<typeof makeTx>[0] = {}) {
     redemption: {
       findMany: vi.fn(),
     },
-    $transaction: vi.fn().mockImplementation((fn: (tx: ReturnType<typeof makeTx>) => Promise<unknown>) => fn(tx)),
+    $transaction: vi.fn().mockImplementation((fn: (tx: ReturnType<typeof makeTx>) => Promise<unknown>, _opts?: unknown) => fn(tx)),
     _tx: tx, // expose for assertions
   };
 }
@@ -121,6 +121,11 @@ describe("requestRedemption", () => {
     ) as { delta: number; reason: string } | undefined;
     expect(debitEvent).toBeDefined();
     expect(debitEvent?.delta).toBe(-REDEEM_COST);
+    // $transaction must use Serializable isolation to prevent double-spend
+    expect(currentDb.$transaction).toHaveBeenCalledWith(
+      expect.any(Function),
+      { isolationLevel: "Serializable" }
+    );
   });
 
   it("(b) throws INSUFFICIENT_BALANCE when balance < REDEEM_COST", async () => {

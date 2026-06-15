@@ -91,7 +91,7 @@ export async function cancelRedemption(params: { id: string; userId: string }) {
       });
     }
     return to;
-  });
+  }, { isolationLevel: "Serializable" });
 }
 
 // 관리자 처리: approve/reject/fulfill. 환급 종단이면 REFUND 이벤트.
@@ -119,5 +119,5 @@ export async function processRedemption(params: { id: string; action: Redemption
       });
     }
     return to;
-  });
+  }, { isolationLevel: "Serializable" });
 }
