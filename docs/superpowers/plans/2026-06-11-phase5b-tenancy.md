@@ -1,4 +1,4 @@
-# RICH DOC Phase 5B — 병원 테넌시 Implementation Plan
+# PooGGo Phase 5B — 병원 테넌시 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 App Router, NextAuth(Auth.js v5), Prisma + Neon Postgres, bcryptjs, vitest.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-11-richdoc-phase5b-tenancy-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-11-pooggo-phase5b-tenancy-design.md`
 
 > **순서:** 순수 로직(T1 등록검증, T2 편집필드, T3 소유권+가드) → 등록 플로우(T4) → 승인(T5) → 폼 scope(T6) → 병원 포털(T7) → 검증(T8). 각 태스크는 `npm run build` 통과로 끝낸다.
 

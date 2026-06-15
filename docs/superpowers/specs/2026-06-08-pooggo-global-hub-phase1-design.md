@@ -1,7 +1,7 @@
-# RICH DOC Global Hub — Phase 1 설계서
+# PooGGo Global Hub — Phase 1 설계서
 
 작성일: 2026-06-08
-대상: RICH DOC 플랫폼을 외국인환자 ↔ K-Beauty/K-Medical 병원 허브 네트워크로 업그레이드
+대상: PooGGo 플랫폼을 외국인환자 ↔ K-Beauty/K-Medical 병원 허브 네트워크로 업그레이드
 이 문서 범위: **Phase 1 (기반: 데이터모델 확장 + 중앙 관리자 CRUD)**
 
 ---
@@ -111,9 +111,9 @@ Prisma에서는 `Json` 컬럼으로 저장. 애플리케이션 계층에서 위 
 `messengers` JSON 형태(예):
 ```json
 {
-  "whatsapp": "+8210...",   "line": "@richdoc",
-  "wechat": "richdoc_kr",   "kakao": "http://pf.kakao.com/...",
-  "messenger": "m.me/richdoc", "phone": "+8210...", "email": "info@..."
+  "whatsapp": "+8210...",   "line": "@pooggo",
+  "wechat": "pooggo_kr",   "kakao": "http://pf.kakao.com/...",
+  "messenger": "m.me/pooggo", "phone": "+8210...", "email": "info@..."
 }
 ```
 각 키는 선택(빈 값 허용). Phase 2에서 채워진 것만 click-to-chat 버튼으로 렌더.

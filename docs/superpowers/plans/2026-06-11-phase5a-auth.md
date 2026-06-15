@@ -1,4 +1,4 @@
-# RICH DOC Phase 5A — 인증 토대(NextAuth) Implementation Plan
+# PooGGo Phase 5A — 인증 토대(NextAuth) Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 App Router, Auth.js v5 (`next-auth@beta`), bcryptjs, Prisma + Neon Postgres, vitest.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-11-richdoc-phase5a-auth-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-11-pooggo-phase5a-auth-design.md`
 
 > **순서:** 순수 로직(T1 password, T2 roles) → 스키마(T3) → NextAuth 설정·가드(T4) → 슈퍼관리자 시드(T5) → 관리자 이전·HMAC 은퇴(T6) → 검증(T7). 각 태스크는 `npm run build` 통과로 끝낸다.
 > **⚠️ 리스크:** `next-auth@beta`(v5) + Next 16 + React 19 조합. 설치 시 peer 경고 가능 → 빌드·런타임을 각 태스크에서 확인. 문제 시 BLOCKED 보고.
@@ -395,11 +395,11 @@ git commit -m "feat(auth): NextAuth(Auth.js v5) Credentials+JWT 설정 + 역할 
 
 `.env`에 추가(값은 임의):
 ```
-SUPER_ADMIN_EMAIL=admin@richdoc.local
+SUPER_ADMIN_EMAIL=admin@pooggo.local
 SUPER_ADMIN_PASSWORD=changeme-admin-1234
 ```
 Run: `npx prisma db seed` (또는 `npx tsx prisma/seed.ts`)
-Expected: "👑 슈퍼관리자 계정 준비: admin@richdoc.local" 출력.
+Expected: "👑 슈퍼관리자 계정 준비: admin@pooggo.local" 출력.
 
 - [ ] **Step 3: 계정 확인**
 
@@ -449,7 +449,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">RICH DOC 관리자</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">PooGGo 관리자</h1>
         <p className="text-gray-500 mb-6 text-sm text-center">이메일과 비밀번호로 로그인하세요.</p>
         {error && <p className="text-red-500 text-sm mb-4 text-center">이메일 또는 비밀번호가 올바르지 않습니다.</p>}
         <form action={doLogin} className="space-y-4">

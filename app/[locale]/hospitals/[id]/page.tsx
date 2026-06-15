@@ -11,6 +11,7 @@ import { auth } from "@/auth";
 import { canViewReviews } from "@/lib/reviews/access";
 import ReviewForm from "@/components/hospitals/ReviewForm";
 import AccountNav from "@/components/AccountNav";
+import ReportButton from "@/components/hospitals/ReportButton";
 
 // 👇 Next.js 15버전 호환 타입 (Promise)
 type Props = {
@@ -158,6 +159,7 @@ export default async function HospitalDetailPage(props: Props) {
                         </span>
                       </div>
                       <p className="text-sm text-gray-600 mt-1 whitespace-pre-line">{rv.content}</p>
+                      {rv.authorUserId !== session?.user?.id && <div className="mt-1"><ReportButton reviewId={rv.id} /></div>}
                     </li>
                   ))}
                 </ul>

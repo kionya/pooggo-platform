@@ -1,4 +1,4 @@
-# RICH DOC Global Hub — Phase 1 Implementation Plan
+# PooGGo Global Hub — Phase 1 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 (App Router, Server Actions), React 19, Prisma 5 + Neon Postgres, Tailwind 4, vitest(신규), node:crypto.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-08-richdoc-global-hub-phase1-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-08-pooggo-global-hub-phase1-design.md`
 
 > **마이그레이션 정책(설계서 보완):** 기존 데이터는 재생성 가능한 dev 시드 5건뿐이라, 파괴적 String→Json 백필 대신 **마이그레이션 리셋 + 다국어 시드 재생성**으로 동일 최종상태(5개 병원, 다국어 구조)를 달성한다. 운영 데이터가 없으므로 무손실 목표는 시드 재생성으로 충족.
 
@@ -734,7 +734,7 @@ export default async function LoginPage({
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">RICH DOC 관리자</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">PooGGo 관리자</h1>
         <p className="text-gray-500 mb-6 text-sm text-center">비밀번호를 입력하세요.</p>
         {error && <p className="text-red-500 text-sm mb-4 text-center">비밀번호가 올바르지 않습니다.</p>}
         <form action={login} className="space-y-4">
@@ -1379,7 +1379,7 @@ git commit -m "feat: 관리자 페이지(대시보드/병원목록/생성/수정
 `app/layout.tsx`의 metadata를 교체:
 ```ts
 export const metadata: Metadata = {
-  title: "RICH DOC Global — K-Beauty & K-Medical Hub",
+  title: "PooGGo Global — K-Beauty & K-Medical Hub",
   description: "Connecting international patients with verified Korean clinics.",
 };
 ```

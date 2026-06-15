@@ -2,12 +2,13 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 
 export default async function AdminDashboard() {
-  const [hospitals, published, consultations, newBookings, pendingAccounts] = await Promise.all([
+  const [hospitals, published, consultations, newBookings, pendingAccounts, reportedReviews] = await Promise.all([
     db.hospital.count(),
     db.hospital.count({ where: { isPublished: true } }),
     db.consultation.count(),
     db.booking.count({ where: { status: "NEW" } }),
     db.user.count({ where: { role: "HOSPITAL", status: "PENDING" } }),
+    db.review.count({ where: { isHidden: false, reports: { some: {} } } }),
   ]);
   const cards = [
     { label: "전체 병원", value: hospitals, href: "/admin/hospitals" },
@@ -15,6 +16,7 @@ export default async function AdminDashboard() {
     { label: "상담 신청", value: consultations, href: "/admin/consultations" },
     { label: "신규 예약", value: newBookings, href: "/admin/bookings?status=NEW" },
     { label: "승인 대기", value: pendingAccounts, href: "/admin/accounts?status=PENDING" },
+    { label: "신고된 후기", value: reportedReviews, href: "/admin/reviews" },
   ];
   return (
     <div>

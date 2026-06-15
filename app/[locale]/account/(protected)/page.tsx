@@ -11,6 +11,7 @@ export default async function AccountHome({ params }: Props) {
   setRequestLocale(locale);
   const session = await requirePatient();
   const t = await getTranslations("Account");
+  const tDetail = await getTranslations("Detail");
 
   const reviews = await db.review.findMany({
     where: { authorUserId: session.user.id },
@@ -34,7 +35,10 @@ export default async function AccountHome({ params }: Props) {
             {reviews.map((r) => (
               <li key={r.id} className="border-b border-gray-50 pb-4 last:border-0">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-gray-800">{resolveText(r.hospital.name, locale)}</span>
+                  <span className="font-medium text-gray-800">
+                    {resolveText(r.hospital.name, locale)}
+                    {r.isHidden && <span className="ml-2 text-xs text-red-500">({tDetail("reviewHidden")})</span>}
+                  </span>
                   <span className="flex items-center text-yellow-500 text-sm font-bold">
                     <Star className="w-4 h-4 fill-current mr-1" /> {r.rating}
                   </span>

@@ -1,4 +1,4 @@
-# RICH DOC Global Hub — Phase 5A 설계서 (인증 토대 · NextAuth)
+# PooGGo Global Hub — Phase 5A 설계서 (인증 토대 · NextAuth)
 
 작성일: 2026-06-11
 대상: 단일 비밀번호 관리자(HMAC 쿠키)를 NextAuth(Auth.js v5) 기반 계정·역할 인증으로 전환한다. 슈퍼관리자 계정화 + 역할(SUPER_ADMIN/HOSPITAL/PATIENT) 토대 구축.

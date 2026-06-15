@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RICH DOC Global — K-Beauty & K-Medical Hub",
+  title: "PooGGo Global — K-Beauty & K-Medical Hub",
   description: "Connecting international patients with verified Korean clinics.",
 };
 

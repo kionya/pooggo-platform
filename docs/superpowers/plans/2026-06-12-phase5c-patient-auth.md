@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 15(App Router) · NextAuth(Auth.js v5, next-auth@5 beta) · Prisma(PostgreSQL/Neon) · next-intl v4(ko/en/zh/ja) · bcryptjs · vitest v4 · Tailwind.
 
-**스펙:** `docs/superpowers/specs/2026-06-12-richdoc-phase5c-patient-auth-design.md`
+**스펙:** `docs/superpowers/specs/2026-06-12-pooggo-phase5c-patient-auth-design.md`
 
 ---
 

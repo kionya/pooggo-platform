@@ -1,4 +1,4 @@
-# RICH DOC Phase 4 — 의료광고법 전수검수 + i18n 전수 Implementation Plan
+# PooGGo Phase 4 — 의료광고법 전수검수 + i18n 전수 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack:** Next.js 16 App Router, next-intl, Tailwind 4, vitest.
 
-**참고 설계서:** `docs/superpowers/specs/2026-06-09-richdoc-phase4-compliance-i18n-design.md`
+**참고 설계서:** `docs/superpowers/specs/2026-06-09-pooggo-phase4-compliance-i18n-design.md`
 
 > **순서:** 스캐너(T1) → 메시지+사전테스트(T2) → ComplianceNotice(T3) → 홈 재작성(T4) → 상세 면책·부작용(T5) → 비교 면책(T6) → 게이트·검증(T7). 각 태스크는 `npm run build` 통과로 끝낸다.
 
@@ -120,28 +120,28 @@ git commit -m "feat(compliance): 금지표현 스캐너 scanForbidden(TDD)"
 `messages/ko.json`:
 ```json
   "Home": { "heroBadge": "외국인 환자를 위한 K-Beauty·K-Medical 허브", "heroTitle": "한국의 K-Beauty & K-Medical 병원을 한곳에서", "heroSubtitle": "검증된 한국 병원을 비교하고, 통역·픽업·사후관리 안내를 받아보세요.", "ctaFind": "병원 찾기", "ctaHow": "이용 방법", "bookConsultation": "상담 예약", "conciergeTitle": "외국인 환자 지원 안내", "conciergeSubtitle": "입국부터 출국까지 필요한 지원을 안내해 드립니다.", "translator": "1:1 의료 통역", "translatorDesc": "영어·중국어·일본어 등 의료 통역사 동행을 안내합니다.", "pickup": "공항 픽업", "pickupDesc": "공항에서 병원·호텔까지 이동 지원을 안내합니다.", "taxRefund": "세금 환급 안내", "taxRefundDesc": "외국인 환자 세금 환급 절차를 안내합니다.", "safety": "안전 정보", "safetyDesc": "수술 실명제·CCTV 참관 등 병원별 안전 시스템을 안내합니다.", "partnersTitle": "제휴 병원 안내", "partnersNote": "병원 등재는 정보 제공이며, 추천·보증을 의미하지 않습니다." },
-  "Footer": { "address": "서울 강남구 (주소 준비 중)", "regNo": "사업자등록번호: 준비 중", "agencyNotice": "외국인환자 유치업자 등록: 준비 중", "customerCenter": "고객센터", "phone": "준비 중", "hours": "평일 09:00–18:00 (KST)", "rights": "© 2026 RICH DOC. All rights reserved." },
+  "Footer": { "address": "서울 강남구 (주소 준비 중)", "regNo": "사업자등록번호: 준비 중", "agencyNotice": "외국인환자 유치업자 등록: 준비 중", "customerCenter": "고객센터", "phone": "준비 중", "hours": "평일 09:00–18:00 (KST)", "rights": "© 2026 PooGGo. All rights reserved." },
   "Compliance": { "priceDisclaimer": "표시 가격은 병원 게시가이며, 실제 비용은 상담 후 결정됩니다.", "reviewDisclaimer": "후기는 개인적 경험이며 시술 효과를 보장하지 않습니다.", "cautionsTitle": "부작용·주의사항", "screeningNotice": "의료광고 사전심의 대상 여부는 게재 전 확인이 필요합니다.", "lowestNote": "게시가 기준" }
 ```
 
 `messages/en.json`:
 ```json
   "Home": { "heroBadge": "K-Beauty & K-Medical hub for international patients", "heroTitle": "Korean K-Beauty & K-Medical clinics, all in one place", "heroSubtitle": "Compare verified Korean clinics and get guidance on interpretation, pickup, and aftercare.", "ctaFind": "Find a clinic", "ctaHow": "How it works", "bookConsultation": "Book consultation", "conciergeTitle": "Support for international patients", "conciergeSubtitle": "Guidance for your visit, from arrival to departure.", "translator": "1:1 medical interpreter", "translatorDesc": "Guidance on medical interpreters in English, Chinese, Japanese and more.", "pickup": "Airport pickup", "pickupDesc": "Guidance on transport from the airport to clinic and hotel.", "taxRefund": "Tax refund guidance", "taxRefundDesc": "Guidance on the tax refund process for international patients.", "safety": "Safety information", "safetyDesc": "Guidance on each clinic's safety systems, such as surgeon disclosure and CCTV observation.", "partnersTitle": "Partner clinics", "partnersNote": "Listings are informational and do not imply endorsement." },
-  "Footer": { "address": "Seoul, Gangnam-gu (address coming soon)", "regNo": "Business reg. no.: coming soon", "agencyNotice": "Foreign patient attraction agency registration: in preparation", "customerCenter": "Customer center", "phone": "Coming soon", "hours": "Mon–Fri 09:00–18:00 (KST)", "rights": "© 2026 RICH DOC. All rights reserved." },
+  "Footer": { "address": "Seoul, Gangnam-gu (address coming soon)", "regNo": "Business reg. no.: coming soon", "agencyNotice": "Foreign patient attraction agency registration: in preparation", "customerCenter": "Customer center", "phone": "Coming soon", "hours": "Mon–Fri 09:00–18:00 (KST)", "rights": "© 2026 PooGGo. All rights reserved." },
   "Compliance": { "priceDisclaimer": "Listed prices are the clinic's posted prices; actual cost is determined after consultation.", "reviewDisclaimer": "Reviews are personal experiences and do not represent treatment outcomes.", "cautionsTitle": "Side effects & precautions", "screeningNotice": "Whether medical advertising requires prior review must be confirmed before publication.", "lowestNote": "by posted price" }
 ```
 
 `messages/zh.json`:
 ```json
   "Home": { "heroBadge": "面向外籍患者的 K-Beauty·K-Medical 平台", "heroTitle": "韩国 K-Beauty 与 K-Medical 医院，一站汇集", "heroSubtitle": "比较经核实的韩国医院，获取翻译、接送与术后管理的指引。", "ctaFind": "寻找医院", "ctaHow": "使用方法", "bookConsultation": "预约咨询", "conciergeTitle": "外籍患者支持指引", "conciergeSubtitle": "从入境到离境，为您提供所需指引。", "translator": "1:1 医疗翻译", "translatorDesc": "提供英语·中文·日语等医疗翻译同行指引。", "pickup": "机场接送", "pickupDesc": "提供从机场到医院与酒店的交通指引。", "taxRefund": "退税指引", "taxRefundDesc": "为外籍患者提供退税流程指引。", "safety": "安全信息", "safetyDesc": "提供各医院安全制度（如手术实名制·CCTV 观摩）的指引。", "partnersTitle": "合作医院", "partnersNote": "收录仅供参考，不代表推荐。" },
-  "Footer": { "address": "首尔江南区（地址筹备中）", "regNo": "营业执照号：筹备中", "agencyNotice": "外籍患者招揽业者登记：筹备中", "customerCenter": "客户中心", "phone": "筹备中", "hours": "周一至周五 09:00–18:00 (KST)", "rights": "© 2026 RICH DOC. 版权所有。" },
+  "Footer": { "address": "首尔江南区（地址筹备中）", "regNo": "营业执照号：筹备中", "agencyNotice": "外籍患者招揽业者登记：筹备中", "customerCenter": "客户中心", "phone": "筹备中", "hours": "周一至周五 09:00–18:00 (KST)", "rights": "© 2026 PooGGo. 版权所有。" },
   "Compliance": { "priceDisclaimer": "所示价格为医院公示价，实际费用经咨询后确定。", "reviewDisclaimer": "评价为个人体验，不代表治疗效果。", "cautionsTitle": "副作用与注意事项", "screeningNotice": "医疗广告是否需事前审议，须在刊登前确认。", "lowestNote": "按公示价" }
 ```
 
 `messages/ja.json`:
 ```json
   "Home": { "heroBadge": "外国人患者のための K-Beauty・K-Medical ハブ", "heroTitle": "韓国の K-Beauty & K-Medical 病院をひとつに", "heroSubtitle": "検証された韓国の病院を比較し、通訳・送迎・アフターケアのご案内を受けられます。", "ctaFind": "病院を探す", "ctaHow": "ご利用方法", "bookConsultation": "相談予約", "conciergeTitle": "外国人患者サポートのご案内", "conciergeSubtitle": "入国から出国まで、必要なサポートをご案内します。", "translator": "1:1 医療通訳", "translatorDesc": "英語・中国語・日本語などの医療通訳同行をご案内します。", "pickup": "空港送迎", "pickupDesc": "空港から病院・ホテルまでの移動をご案内します。", "taxRefund": "税金還付のご案内", "taxRefundDesc": "外国人患者の税金還付手続きをご案内します。", "safety": "安全情報", "safetyDesc": "手術実名制・CCTV 立会いなど、病院ごとの安全システムをご案内します。", "partnersTitle": "提携病院のご案内", "partnersNote": "掲載は情報提供であり、推薦を意味しません。" },
-  "Footer": { "address": "ソウル江南区（住所準備中）", "regNo": "事業者登録番号：準備中", "agencyNotice": "外国人患者誘致業者登録：準備中", "customerCenter": "カスタマーセンター", "phone": "準備中", "hours": "平日 09:00–18:00 (KST)", "rights": "© 2026 RICH DOC. All rights reserved." },
+  "Footer": { "address": "ソウル江南区（住所準備中）", "regNo": "事業者登録番号：準備中", "agencyNotice": "外国人患者誘致業者登録：準備中", "customerCenter": "カスタマーセンター", "phone": "準備中", "hours": "平日 09:00–18:00 (KST)", "rights": "© 2026 PooGGo. All rights reserved." },
   "Compliance": { "priceDisclaimer": "表示価格は病院の掲示価格であり、実際の費用は相談後に決定されます。", "reviewDisclaimer": "口コミは個人の経験であり、施術効果を表すものではありません。", "cautionsTitle": "副作用・注意事項", "screeningNotice": "医療広告の事前審議の要否は掲載前に確認が必要です。", "lowestNote": "掲示価格基準" }
 ```
 
@@ -255,7 +255,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Globe className="w-6 h-6 text-blue-600" />
-            <div className="text-2xl font-bold text-blue-900 tracking-tight">RICH DOC <span className="text-xs text-blue-500 font-normal">GLOBAL</span></div>
+            <div className="text-2xl font-bold text-blue-900 tracking-tight">PooGGo <span className="text-xs text-blue-500 font-normal">GLOBAL</span></div>
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex"><LocaleSwitcher /></div>
@@ -315,7 +315,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <footer className="bg-white border-t border-gray-200 py-12 px-4 text-sm text-gray-600">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-8">
           <div>
-            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">RICH DOC <Globe className="w-4 h-4 text-blue-500"/></h3>
+            <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">PooGGo <Globe className="w-4 h-4 text-blue-500"/></h3>
             <p className="mb-2">{f("address")}</p>
             <p>{f("regNo")}</p>
             <p className="mt-1 text-xs text-gray-400">{f("agencyNotice")}</p>

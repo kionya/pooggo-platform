@@ -1,4 +1,4 @@
-# RICH DOC Global Hub — Phase 5B 설계서 (병원 테넌시)
+# PooGGo Global Hub — Phase 5B 설계서 (병원 테넌시)
 
 작성일: 2026-06-11
 대상: 병원이 자가등록하고 슈퍼관리자 승인 후, **별도 /hospital 포털에서 자기 병원 데이터·예약만** 관리하는 멀티테넌트 권한 스코핑을 구축한다.

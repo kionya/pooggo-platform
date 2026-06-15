@@ -1,4 +1,4 @@
-# RICH DOC Global Hub — Phase 3 설계서 (예약 + 알림)
+# PooGGo Global Hub — Phase 3 설계서 (예약 + 알림)
 
 작성일: 2026-06-09
 대상: 외국인 환자가 병원에 희망일시로 예약요청하고, 관리자가 파이프라인으로 관리하며, 환자·관리자·병원에 자동 알림이 가는 예약 시스템
@@ -160,7 +160,7 @@ model Booking {
 |---|---|
 | `BLOB_READ_WRITE_TOKEN` | Vercel Blob 사진 업로드 |
 | `RESEND_API_KEY` | Resend 이메일 |
-| `RESEND_FROM` | 이메일 발신 주소(예: `noreply@richdoc...`) |
+| `RESEND_FROM` | 이메일 발신 주소(예: `noreply@pooggo...`) |
 | `TELEGRAM_BOT_TOKEN` | 텔레그램 봇 |
 | `TELEGRAM_ADMIN_CHAT_ID` | 관리자 알림 채팅 ID |
 | `ADMIN_NOTIFY_EMAIL` | 관리자 이메일 수신 주소 |
