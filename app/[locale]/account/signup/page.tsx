@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function PatientSignupPage() {
   const t = useTranslations("Account");
+  const tErr = useTranslations("Errors");
   const locale = useLocale();
   const [errors, setErrors] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
@@ -30,7 +31,7 @@ export default function PatientSignupPage() {
         <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6 text-center">{t("signupTitle")}</h1>
         {errors.length > 0 && (
           <div className="bg-clay-600/10 border border-clay-600/30 text-clay-700 p-3 rounded-lg text-sm mb-4">
-            {errors.map((er, i) => <div key={i}>• {er}</div>)}
+            {errors.map((er, i) => <div key={i}>• {tErr(er)}</div>)}
           </div>
         )}
         <form onSubmit={onSubmit} className="space-y-4">

@@ -38,7 +38,7 @@ export async function createBooking(formData: FormData): Promise<{ ok: boolean; 
   if (errors.length) return { ok: false, errors };
 
   const hospitals = await db.hospital.findMany({ where: { id: { in: input.hospitalIds }, isPublished: true } });
-  if (hospitals.length === 0) return { ok: false, errors: ["hospital: 유효한 병원이 없습니다."] };
+  if (hospitals.length === 0) return { ok: false, errors: ["NO_VALID_HOSPITAL"] };
 
   const photo = await uploadBookingPhoto(formData.get("photo") as File | null);
   const multiple = hospitals.length > 1;

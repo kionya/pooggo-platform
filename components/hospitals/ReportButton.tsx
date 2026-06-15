@@ -6,6 +6,7 @@ import { reportReview } from "@/app/actions";
 
 export default function ReportButton({ reviewId }: { reviewId: string }) {
   const t = useTranslations("Detail");
+  const tErr = useTranslations("Errors");
   const [open, setOpen] = useState(false);
   const [done, setDone] = useState(false);
   const [msg, setMsg] = useState("");
@@ -16,7 +17,7 @@ export default function ReportButton({ reviewId }: { reviewId: string }) {
     fd.set("reviewId", reviewId);
     const res = await reportReview(fd);
     if (res.ok) { setDone(true); setOpen(false); }
-    else setMsg(res.errors[0] ?? "");
+    else setMsg(res.errors[0] ? tErr(res.errors[0]) : "");
   }
 
   if (done) return <span className="text-xs text-gray-400">{t("reported")}</span>;
