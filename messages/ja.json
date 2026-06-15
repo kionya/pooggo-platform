@@ -1,4 +1,4 @@
-{
+{ "Consult": {"title":"相談を申し込む","name":"お名前","namePlaceholder":"山田太郎","phone":"電話番号（必須）","content":"ご相談内容","contentPlaceholder":"どのようなことをお知りになりたいですか？","submit":"申し込む"},
   "Stamps": { "chipAria": "スタンプ {n}/{goal}",
   "title": "PooGGo スタンプ",
   "subtitle": "スタンプを10個集めると、ベネフィット医院で無料施術と交換できます。",

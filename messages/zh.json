@@ -1,4 +1,4 @@
-{
+{ "Consult": {"title":"咨询申请","name":"您的姓名","namePlaceholder":"张三","phone":"联系电话（必填）","content":"咨询内容","contentPlaceholder":"您想了解什么？","submit":"提交申请"},
   "Stamps": { "chipAria": "印章 {n}/{goal}",
   "title": "PooGGo 印章",
   "subtitle": "集满10个印章即可在合作（Benefit）医院兑换一次免费项目。",
