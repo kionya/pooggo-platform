@@ -3,6 +3,7 @@ import { AuthError } from "next-auth";
 import { redirect } from "next/navigation";
 import { inputClass } from "@/components/ui/Field";
 import { Logo } from "@/components/ui/Logo";
+import { Card } from "@/components/ui/Card";
 
 export default async function HospitalLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const { error } = await searchParams;
@@ -19,7 +20,7 @@ export default async function HospitalLoginPage({ searchParams }: { searchParams
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-ivory p-4">
-      <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-8 w-full max-w-sm">
+      <Card className="p-8 w-full max-w-sm">
         <div className="flex justify-center mb-6">
           <Logo />
         </div>
@@ -40,7 +41,7 @@ export default async function HospitalLoginPage({ searchParams }: { searchParams
         <p className="text-center text-sm text-stone-400 mt-4">
           <a href="/hospital/register" className="hover:text-teal-600 hover:underline transition-colors">입점 신청하기</a>
         </p>
-      </div>
+      </Card>
     </div>
   );
 }

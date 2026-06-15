@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { resolveText } from "@/lib/i18n/text";
 import { requireHospital } from "@/lib/auth/guard";
 import Link from "next/link";
+import { Card } from "@/components/ui/Card";
 
 const TIER_LABEL: Record<string, string> = { RECOMMENDED: "추천", PARTNER: "제휴", BENEFIT: "베네핏" };
 
@@ -19,14 +20,14 @@ export default async function HospitalDashboard() {
     <div>
       <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6">{resolveText(hospital.name, "ko")}</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5">
+        <Card className="p-5">
           <div className="text-sm text-stone-500">공개 상태</div>
           <div className="text-lg font-bold text-navy-900 mt-2">{hospital.isPublished ? "공개중" : "비공개"}</div>
-        </div>
-        <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5">
+        </Card>
+        <Card className="p-5">
           <div className="text-sm text-stone-500">등급</div>
           <div className="text-lg font-bold text-navy-900 mt-2">{TIER_LABEL[hospital.tier] ?? hospital.tier}</div>
-        </div>
+        </Card>
         <Link href="/hospital/bookings?status=NEW" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
           <div className="text-sm text-stone-500">신규 예약</div>
           <div className="text-3xl font-bold text-navy-900 mt-2">{newCount}</div>

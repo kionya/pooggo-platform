@@ -1,9 +1,10 @@
 import { Logo } from "@/components/ui/Logo";
+import { Card } from "@/components/ui/Card";
 
 export default function RegisterSuccessPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-ivory p-4 text-center">
-      <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-8 w-full max-w-md">
+      <Card className="p-8 w-full max-w-md">
         <div className="flex justify-center mb-6">
           <Logo />
         </div>
@@ -16,7 +17,7 @@ export default function RegisterSuccessPage() {
         >
           로그인 페이지로
         </a>
-      </div>
+      </Card>
     </div>
   );
 }

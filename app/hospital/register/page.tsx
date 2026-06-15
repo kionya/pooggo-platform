@@ -4,6 +4,7 @@ import { useState } from "react";
 import { registerHospital } from "@/app/hospital/register-actions";
 import { inputClass } from "@/components/ui/Field";
 import { Logo } from "@/components/ui/Logo";
+import { Card } from "@/components/ui/Card";
 
 export default function HospitalRegisterPage() {
   const [errors, setErrors] = useState<string[]>([]);
@@ -20,7 +21,7 @@ export default function HospitalRegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-ivory p-4">
-      <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-8 w-full max-w-md">
+      <Card className="p-8 w-full max-w-md">
         <div className="flex justify-center mb-6">
           <Logo />
         </div>
@@ -47,7 +48,7 @@ export default function HospitalRegisterPage() {
         <p className="text-center text-sm text-stone-400 mt-4">
           <a href="/hospital/login" className="hover:text-teal-600 hover:underline transition-colors">이미 계정이 있으신가요? 로그인</a>
         </p>
-      </div>
+      </Card>
     </div>
   );
 }
