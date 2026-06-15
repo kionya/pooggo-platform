@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 
 const STYLE: Record<string, string> = {
-  BENEFIT: "bg-amber-100 text-amber-800 border-amber-300",
-  PARTNER: "bg-blue-100 text-blue-700 border-blue-300",
-  RECOMMENDED: "bg-gray-100 text-gray-600 border-gray-200",
+  BENEFIT: "bg-gold-500/15 text-gold-600 border-gold-500/30",
+  PARTNER: "bg-teal-600/10 text-teal-700 border-teal-600/30",
+  RECOMMENDED: "bg-stone-100 text-stone-600 border-stone-200",
 };
 
 export default function TierBadge({ tier }: { tier: string }) {

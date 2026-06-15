@@ -21,10 +21,12 @@ export default async function VerifyPage({ params, searchParams }: Props) {
 
   // 실패(없음/만료)
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
-        <p className="text-red-500 text-sm mb-4">{t("verifyExpired")}</p>
-        <Link href="/account/signup" className="text-blue-600 text-sm hover:underline">{t("signupTitle")}</Link>
+    <div className="min-h-screen flex items-center justify-center bg-ivory p-4">
+      <div className="bg-cream p-8 rounded-2xl border border-stone-200 shadow-[var(--shadow-card)] w-full max-w-md text-center">
+        <div className="bg-clay-600/10 border border-clay-600/30 text-clay-700 p-3 rounded-lg text-sm mb-4">
+          {t("verifyExpired")}
+        </div>
+        <Link href="/account/signup" className="text-teal-600 text-sm hover:underline hover:text-teal-700">{t("signupTitle")}</Link>
       </div>
     </div>
   );

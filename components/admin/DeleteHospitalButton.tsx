@@ -24,7 +24,7 @@ export default function DeleteHospitalButton({ id, name }: { id: string; name: s
     <button
       onClick={onDelete}
       disabled={busy}
-      className="text-sm text-red-500 px-2 disabled:opacity-50"
+      className="text-sm text-clay-600 hover:text-clay-700 px-2 disabled:opacity-50 transition-colors"
     >
       {busy ? "삭제 중..." : "삭제"}
     </button>

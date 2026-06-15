@@ -11,13 +11,13 @@ export default function LocaleSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
   return (
-    <div className="flex items-center gap-3 text-sm font-bold text-gray-400">
+    <div className="flex items-center gap-3 text-sm font-bold text-stone-400">
       {routing.locales.map((l) => (
         <button
           key={l}
           type="button"
           onClick={() => router.replace(pathname, { locale: l })}
-          className={l === locale ? "text-gray-900 cursor-pointer" : "hover:text-gray-900 cursor-pointer transition"}
+          className={l === locale ? "text-navy-900 cursor-pointer" : "hover:text-navy-900 cursor-pointer transition-colors"}
         >
           {LABEL[l]}
         </button>

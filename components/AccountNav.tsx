@@ -7,13 +7,13 @@ export default async function AccountNav() {
   const t = await getTranslations("Account");
   if (session?.user) {
     return (
-      <Link href="/account" className="text-sm font-medium text-gray-700 hover:text-blue-600">
+      <Link href="/account" className="text-sm font-medium text-navy-900 hover:text-teal-600 transition-colors">
         {t("myAccount")}
       </Link>
     );
   }
   return (
-    <Link href="/account/login" className="text-sm font-medium text-gray-700 hover:text-blue-600">
+    <Link href="/account/login" className="text-sm font-medium text-navy-900 hover:text-teal-600 transition-colors">
       {t("login")}
     </Link>
   );

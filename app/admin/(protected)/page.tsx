@@ -2,13 +2,14 @@ import { db } from "@/lib/db";
 import Link from "next/link";
 
 export default async function AdminDashboard() {
-  const [hospitals, published, consultations, newBookings, pendingAccounts, reportedReviews] = await Promise.all([
+  const [hospitals, published, consultations, newBookings, pendingAccounts, reportedReviews, pendingRedemptions] = await Promise.all([
     db.hospital.count(),
     db.hospital.count({ where: { isPublished: true } }),
     db.consultation.count(),
     db.booking.count({ where: { status: "NEW" } }),
     db.user.count({ where: { role: "HOSPITAL", status: "PENDING" } }),
     db.review.count({ where: { isHidden: false, reports: { some: {} } } }),
+    db.redemption.count({ where: { status: "REQUESTED" } }),
   ]);
   const cards = [
     { label: "전체 병원", value: hospitals, href: "/admin/hospitals" },
@@ -20,14 +21,18 @@ export default async function AdminDashboard() {
   ];
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">대시보드</h1>
+      <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6">대시보드</h1>
       <div className="grid grid-cols-3 gap-4">
         {cards.map((c) => (
-          <Link key={c.label} href={c.href} className="bg-white p-6 rounded-xl border hover:shadow-md transition">
-            <div className="text-sm text-gray-500">{c.label}</div>
-            <div className="text-3xl font-bold mt-2">{c.value}</div>
+          <Link key={c.label} href={c.href} className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-float)] transition-shadow">
+            <div className="text-sm text-stone-500">{c.label}</div>
+            <div className="text-3xl font-bold text-navy-900 mt-2">{c.value}</div>
           </Link>
         ))}
+        <Link href="/admin/redemptions" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-float)] transition-shadow">
+          <div className="text-sm text-stone-500">대기 중 교환 신청</div>
+          <div className="text-3xl font-bold text-navy-900 mt-2">{pendingRedemptions}</div>
+        </Link>
       </div>
     </div>
   );

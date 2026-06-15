@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { LANGS, type I18nText, type Lang } from "@/lib/i18n/types";
+import { inputClass } from "@/components/ui/Field";
 
 const LABEL: Record<Lang, string> = { ko: "KR", en: "EN", zh: "CN", ja: "JP" };
 
@@ -20,8 +21,8 @@ export default function I18nField({
   return (
     <div className="mb-4">
       <div className="flex items-center justify-between mb-1">
-        <label htmlFor={fieldId} className="text-sm font-bold text-gray-700">
-          {label} {incomplete && <span className="text-red-500">*4개 언어 필수</span>}
+        <label htmlFor={fieldId} className="text-sm font-bold text-navy-900">
+          {label} {incomplete && <span className="text-clay-600">*4개 언어 필수</span>}
         </label>
         <div className="flex gap-1">
           {LANGS.map((l) => (
@@ -29,7 +30,7 @@ export default function I18nField({
               key={l}
               type="button"
               onClick={() => setTab(l)}
-              className={`px-2 py-0.5 text-xs rounded ${tab === l ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-600"} ${!value[l].trim() ? "ring-1 ring-red-300" : ""}`}
+              className={`px-2 py-0.5 text-xs rounded font-bold transition-colors ${tab === l ? "bg-navy-900 text-cream" : "bg-stone-100 text-stone-600 hover:bg-stone-200"} ${!value[l].trim() ? "ring-1 ring-clay-600/50" : ""}`}
             >
               {LABEL[l]}
             </button>
@@ -41,14 +42,14 @@ export default function I18nField({
           id={fieldId}
           value={value[tab]}
           onChange={(e) => onChange({ ...value, [tab]: e.target.value })}
-          className="w-full border border-gray-200 p-3 rounded-lg h-24 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`${inputClass} h-24 resize-none`}
         />
       ) : (
         <input
           id={fieldId}
           value={value[tab]}
           onChange={(e) => onChange({ ...value, [tab]: e.target.value })}
-          className="w-full border border-gray-200 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          className={inputClass}
         />
       )}
     </div>

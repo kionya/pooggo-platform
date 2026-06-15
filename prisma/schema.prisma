@@ -27,6 +27,8 @@ model User {
   leads         Lead[]
   reviews       Review[]
   reports       Report[]
+  stampEvents   StampEvent[]
+  redemptions   Redemption[]
   emailVerifyToken   String?
   emailVerifyExpires DateTime?
 
@@ -81,6 +83,7 @@ model Hospital {
   leads       Lead[]
   bookings    Booking[]
   users       User[]
+  redemptions Redemption[]
 
   @@index([city, category])
   @@index([isPublished])
@@ -247,4 +250,46 @@ model Booking {
   @@index([status])
   @@index([hospitalId])
   @@index([groupId])
+}
+
+// 스탬프 원장 — 통합 1통장: 잔액 = sum(delta)
+model StampEvent {
+  id           String      @id @default(uuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  delta        Int         // +1 적립 / -10 교환차감 / +10 환급 / ± 보정
+  reason       String      // EARN_BOOKING | EARN_REVIEW | ADMIN_GRANT | REDEEM | REFUND | ADJUST
+  sourceType   String?
+  sourceId     String?
+  note         String?
+  adminId      String?
+  redemptionId String?
+  redemption   Redemption? @relation(fields: [redemptionId], references: [id], onDelete: SetNull)
+  createdAt    DateTime    @default(now())
+
+  @@index([userId])
+  @@index([reason])
+}
+
+// 무료시술 교환 신청
+model Redemption {
+  id                 String       @id @default(uuid())
+  code               String       @unique
+  userId             String
+  user               User         @relation(fields: [userId], references: [id])
+  hospitalId         String
+  hospital           Hospital     @relation(fields: [hospitalId], references: [id])
+  stampCost          Int          @default(10)
+  status             String       @default("REQUESTED")
+  note               String?
+  adminNote          String?
+  events             StampEvent[]
+  processedByAdminId String?
+  processedAt        DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([hospitalId])
+  @@index([status])
 }
