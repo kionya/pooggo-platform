@@ -31,7 +31,7 @@ export default async function AdminDashboard() {
         ))}
         <Link href="/admin/redemptions" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-6 hover:shadow-[var(--shadow-float)] transition-shadow">
           <div className="text-sm text-stone-500">대기 중 교환 신청</div>
-          <div className="font-serif text-3xl font-bold text-navy-900 mt-2">{pendingRedemptions}</div>
+          <div className="text-3xl font-bold text-navy-900 mt-2">{pendingRedemptions}</div>
         </Link>
       </div>
     </div>
