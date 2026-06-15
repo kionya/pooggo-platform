@@ -1,4 +1,4 @@
-import { Calendar, ShieldCheck, Plane, Languages, HeartHandshake } from "lucide-react";
+import { Calendar, ShieldCheck, Languages, MessageCircle, Scale } from "lucide-react";
 import HospitalMainSection from "@/components/HospitalMainSection";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -14,8 +14,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   const cards = [
     { icon: Languages, title: t("translator"), desc: t("translatorDesc") },
-    { icon: Plane, title: t("pickup"), desc: t("pickupDesc") },
-    { icon: HeartHandshake, title: t("taxRefund"), desc: t("taxRefundDesc") },
+    { icon: MessageCircle, title: t("messengerConsult"), desc: t("messengerConsultDesc") },
+    { icon: Scale, title: t("compareQuote"), desc: t("compareQuoteDesc") },
     { icon: ShieldCheck, title: t("safety"), desc: t("safetyDesc") },
   ];
 
