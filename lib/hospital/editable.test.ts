@@ -9,7 +9,7 @@ const hours = { mon: { open: "10:00", close: "19:00", closed: false }, tue: { op
 function valid(): HospitalInput {
   return {
     slug: "rejuel", name: full("리쥬엘"), intro: full("소개"), about: full("상세"), address: full("주소"), cautions: full("주의"),
-    city: "Seoul", district: "Gangnam-gu", category: "DERMA", tags: "리프팅", image: "https://x/y.jpg", images: [],
+    city: "Seoul", district: "Gangnam-gu", category: "DERMA", tags: full("리프팅"), image: "https://x/y.jpg", images: [],
     operatingHours: hours as any, messengers: { whatsapp: "", line: "", wechat: "", kakao: "", messenger: "", phone: "", email: "" },
     isPublished: true, tier: "BENEFIT", benefits: full("혜택"),
     doctors: [{ name: full("원장"), specialty: full("피부과"), image: "", order: 0 }],

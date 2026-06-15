@@ -13,7 +13,7 @@ export default async function EditHospitalPage({ params }: { params: Promise<{ i
     slug: h.slug,
     name: toI18n(h.name), intro: toI18n(h.intro), about: toI18n(h.about),
     address: toI18n(h.address), cautions: toI18n(h.cautions),
-    city: h.city, district: h.district, category: h.category, tags: h.tags,
+    city: h.city, district: h.district, category: h.category, tags: toI18n(h.tags),
     image: h.image, images: h.images,
     operatingHours: h.operatingHours as any,
     messengers: h.messengers as any,

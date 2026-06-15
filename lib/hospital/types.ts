@@ -22,7 +22,7 @@ export type HospitalInput = {
   slug: string;
   name: I18nText; intro: I18nText; about: I18nText; address: I18nText;
   cautions: I18nText;
-  city: string; district: string; category: string; tags: string; // 콤마구분 문자열 (Prisma의 String 컬럼과 1:1)
+  city: string; district: string; category: string; tags: I18nText; // 언어별 콤마구분 태그 (Prisma Json 컬럼)
   image: string; images: string[];
   operatingHours: OperatingHours;
   messengers: Messengers;
