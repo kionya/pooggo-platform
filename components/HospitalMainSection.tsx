@@ -61,7 +61,7 @@ export default function HospitalMainSection() {
             {hospitals.map((hospital) => {
               const isSelected = compareList.includes(hospital.id);
               // 👇 안전장치 2: 태그가 없으면 빈 문자열로 처리
-              const tagsArray = (hospital.tags || "").split(',');
+              const tagsArray = resolveText(hospital.tags, locale).split(",").filter(Boolean);
 
               return (
                 <div key={hospital.id} className={`bg-cream rounded-2xl overflow-hidden shadow-[var(--shadow-card)] border transition-all hover:shadow-lg ${isSelected ? 'border-gold-500 ring-2 ring-gold-500/20' : 'border-stone-200'}`}>

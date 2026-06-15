@@ -45,7 +45,7 @@ export async function getHospitals() {
         id: h.id,
         name: resolveText(h.name, "ko"),
         location: `${h.city}, ${h.district}`,
-        tags: h.tags || "",
+        tags: h.tags,
         rating: h.rating,
         reviews: h.reviews,
         image: h.image || "",

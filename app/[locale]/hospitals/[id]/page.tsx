@@ -50,7 +50,7 @@ export default async function HospitalDetailPage(props: Props) {
   }
 
   // 안전장치
-  const tagsArray = (hospital.tags || "").split(',');
+  const tagsArray = resolveText(hospital.tags, locale).split(",").filter(Boolean);
 
   // 후기 로그인 게이팅: 로그인(PATIENT/HOSPITAL/SUPER_ADMIN)만 열람·작성
   const session = await auth();

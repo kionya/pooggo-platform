@@ -11,7 +11,7 @@ function valid(): HospitalInput {
     slug: "rejuel-gangnam",
     name: full("리쥬엘"), intro: full("소개"), about: full("상세"), address: full("주소"),
     cautions: full("주의사항"),
-    city: "Seoul", district: "Gangnam-gu", category: "DERMA", tags: "리프팅",
+    city: "Seoul", district: "Gangnam-gu", category: "DERMA", tags: full("리프팅"),
     image: "https://x/y.jpg", images: [],
     operatingHours: { mon: baseHours, tue: baseHours, wed: baseHours, thu: baseHours, fri: baseHours, sat: baseHours, sun: { open: "", close: "", closed: true }, note: full("휴무") },
     messengers: { whatsapp: "", line: "", wechat: "", kakao: "", messenger: "", phone: "", email: "" },

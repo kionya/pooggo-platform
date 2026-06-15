@@ -13,7 +13,7 @@ export default async function HospitalProfilePage() {
   const initial: HospitalInput = {
     slug: h.slug,
     name: toI18n(h.name), intro: toI18n(h.intro), about: toI18n(h.about), address: toI18n(h.address), cautions: toI18n(h.cautions),
-    city: h.city, district: h.district, category: h.category, tags: h.tags, image: h.image, images: h.images,
+    city: h.city, district: h.district, category: h.category, tags: toI18n(h.tags), image: h.image, images: h.images,
     operatingHours: h.operatingHours as any, messengers: h.messengers as any,
     isPublished: h.isPublished, tier: h.tier, benefits: toI18n(h.benefits),
     doctors: h.doctors.map((d) => ({ name: toI18n(d.name), specialty: toI18n(d.specialty), image: d.image ?? "", order: d.order })),

@@ -18,7 +18,7 @@ export function emptyHospitalInput(): HospitalInput {
   return {
     slug: "", name: { ...EMPTY_I18N }, intro: { ...EMPTY_I18N }, about: { ...EMPTY_I18N },
     address: { ...EMPTY_I18N }, cautions: { ...EMPTY_I18N },
-    city: "Seoul", district: "", category: "PLASTIC", tags: "",
+    city: "Seoul", district: "", category: "PLASTIC", tags: { ...EMPTY_I18N },
     image: "", images: [], operatingHours: emptyHours(), messengers: emptyMessengers(),
     isPublished: false,
     tier: "RECOMMENDED", benefits: { ...EMPTY_I18N },

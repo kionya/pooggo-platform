@@ -85,11 +85,8 @@ export default function HospitalForm({
               {HOSPITAL_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
-          <div>
-            <label className="text-sm font-bold text-navy-900 block mb-1">태그(콤마)</label>
-            <input value={form.tags} onChange={(e) => set("tags", e.target.value)} placeholder="리프팅,보톡스" className={inputClass} />
-          </div>
         </div>
+        <I18nField label="태그 (콤마로 구분)" value={form.tags} onChange={(v) => set("tags", v)} />
         <label htmlFor="hf-image" className="text-sm font-bold text-navy-900 mt-3 block mb-1">대표 이미지 URL</label>
         <input id="hf-image" value={form.image} onChange={(e) => set("image", e.target.value)} placeholder="https://..." className={inputClass} />
         {scope === "admin" && (
