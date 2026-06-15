@@ -13,18 +13,33 @@ export default async function HospitalDashboard() {
     db.booking.count({ where: { hospitalId, status: "NEW" } }),
     db.booking.count({ where: { hospitalId } }),
   ]);
-  if (!hospital) return <p className="text-gray-400">병원 정보를 찾을 수 없습니다.</p>;
+  if (!hospital) return <p className="text-stone-400">병원 정보를 찾을 수 없습니다.</p>;
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">{resolveText(hospital.name, "ko")}</h1>
+      <h1 className="font-serif text-2xl font-bold text-navy-900 mb-6">{resolveText(hospital.name, "ko")}</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white p-5 rounded-xl border"><div className="text-sm text-gray-500">공개 상태</div><div className="text-lg font-bold mt-2">{hospital.isPublished ? "공개중" : "비공개"}</div></div>
-        <div className="bg-white p-5 rounded-xl border"><div className="text-sm text-gray-500">등급</div><div className="text-lg font-bold mt-2">{TIER_LABEL[hospital.tier] ?? hospital.tier}</div></div>
-        <Link href="/hospital/bookings?status=NEW" className="bg-white p-5 rounded-xl border hover:shadow-md"><div className="text-sm text-gray-500">신규 예약</div><div className="text-3xl font-bold mt-2">{newCount}</div></Link>
-        <Link href="/hospital/bookings" className="bg-white p-5 rounded-xl border hover:shadow-md"><div className="text-sm text-gray-500">전체 예약</div><div className="text-3xl font-bold mt-2">{totalCount}</div></Link>
+        <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5">
+          <div className="text-sm text-stone-500">공개 상태</div>
+          <div className="text-lg font-bold text-navy-900 mt-2">{hospital.isPublished ? "공개중" : "비공개"}</div>
+        </div>
+        <div className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5">
+          <div className="text-sm text-stone-500">등급</div>
+          <div className="text-lg font-bold text-navy-900 mt-2">{TIER_LABEL[hospital.tier] ?? hospital.tier}</div>
+        </div>
+        <Link href="/hospital/bookings?status=NEW" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
+          <div className="text-sm text-stone-500">신규 예약</div>
+          <div className="text-3xl font-bold text-navy-900 mt-2">{newCount}</div>
+        </Link>
+        <Link href="/hospital/bookings" className="bg-cream border border-stone-200 rounded-2xl shadow-[var(--shadow-card)] p-5 hover:shadow-[var(--shadow-float)] transition-shadow">
+          <div className="text-sm text-stone-500">전체 예약</div>
+          <div className="text-3xl font-bold text-navy-900 mt-2">{totalCount}</div>
+        </Link>
       </div>
-      <p className="text-sm text-gray-500">공개 여부·등급·시술 가격은 플랫폼에서 관리됩니다. 변경이 필요하면 운영팀에 문의하세요. <Link href="/hospital/profile" className="text-blue-600 underline">병원 정보 수정 →</Link></p>
+      <p className="text-sm text-stone-500">
+        공개 여부·등급·시술 가격은 플랫폼에서 관리됩니다. 변경이 필요하면 운영팀에 문의하세요.{" "}
+        <Link href="/hospital/profile" className="text-teal-600 underline hover:text-teal-700">병원 정보 수정 →</Link>
+      </p>
     </div>
   );
 }
