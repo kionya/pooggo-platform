@@ -14,6 +14,8 @@ describe("nextRedemptionStatus", () => {
     expect(nextRedemptionStatus("APPROVED", "fulfill")).toBe("FULFILLED");
     expect(nextRedemptionStatus("REQUESTED", "cancel")).toBe("CANCELLED");
     expect(nextRedemptionStatus("APPROVED", "reject")).toBe("REJECTED");
+    expect(nextRedemptionStatus("REQUESTED", "reject")).toBe("REJECTED");
+    expect(nextRedemptionStatus("APPROVED", "cancel")).toBe("CANCELLED");
   });
   it("rejects invalid transitions", () => {
     expect(nextRedemptionStatus("REQUESTED", "fulfill")).toBeNull();
