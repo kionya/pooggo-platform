@@ -51,7 +51,7 @@ function makeTx(overrides: {
     },
     stampEvent: {
       aggregate: vi.fn().mockResolvedValue({ _sum: { delta: balanceDelta } }),
-      create: vi.fn().mockImplementation(({ data }: { data: unknown }) => {
+      create: vi.fn().mockImplementation(({ data }: { data: Record<string, unknown> }) => {
         createdStampEvents.push(data);
         return Promise.resolve({ id: "event-1", ...data });
       }),
@@ -63,10 +63,10 @@ function makeTx(overrides: {
         status: redemptionStatus,
         stampCost: redemptionStampCost,
       }),
-      create: vi.fn().mockImplementation(({ data }: { data: unknown }) => {
+      create: vi.fn().mockImplementation(({ data }: { data: Record<string, unknown> }) => {
         return Promise.resolve({ id: "redemption-1", ...data });
       }),
-      update: vi.fn().mockImplementation(({ data }: { data: unknown }) => {
+      update: vi.fn().mockImplementation(({ data }: { data: Record<string, unknown> }) => {
         updatedRedemptions.push(data);
         return Promise.resolve({ id: redemptionId, ...data });
       }),
